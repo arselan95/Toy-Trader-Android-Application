@@ -9,4 +9,5 @@
     <string name="phone_number">Phone Number</string>
     <string name="address">Address</string>
     <string name="new_user_register_instead">New User? Register Instead</string>
+    <string name="settings">Settings</string>
 </resources>
