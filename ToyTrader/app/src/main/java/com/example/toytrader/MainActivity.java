@@ -6,11 +6,14 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
     private Button loginButton;
@@ -57,5 +60,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    //add an employee
+    public void uploadToy(View view) {
+        //new DbManager (this);
+        Intent intent;
+        intent = new Intent(this, UploadToy.class);
+        startActivity(intent);
     }
 }
