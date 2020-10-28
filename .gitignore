@@ -34,3 +34,4 @@ build/
 /captures/
 /installer/
 /fastlane/report.xml
+.DS_Store
