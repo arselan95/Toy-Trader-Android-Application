@@ -35,3 +35,10 @@ build/
 /installer/
 /fastlane/report.xml
 .DS_Store
+ToyTrader/.gradle
+ToyTrader/app/build/intermediates
+ToyTrader/app/build/tmp
+ToyTrader/.gradle
+ToyTrader/app/build/intermediates
+ToyTrader/app/build
+ToyTrader/local.properties
