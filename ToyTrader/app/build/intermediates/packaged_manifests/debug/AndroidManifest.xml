@@ -25,6 +25,13 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
+        <activity android:name="com.example.toytrader.UserHomeActivity" >
+            <intent-filter>
+                <action android:name=".UserHomeActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name="com.example.toytrader.RegisterActivity" >
             <intent-filter>
                 <action android:name=".RegisterActivity" />
