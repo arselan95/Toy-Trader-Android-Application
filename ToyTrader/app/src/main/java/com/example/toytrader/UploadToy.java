@@ -13,7 +13,7 @@ public class UploadToy extends AppCompatActivity {
 
     EditText name, tags, location, cost, description, image;
 
-    double newcost=0;
+
 
 
     @Override
@@ -29,6 +29,7 @@ public class UploadToy extends AppCompatActivity {
         image = (EditText) findViewById(R.id.imagesrc);
 
 
+
     }
 
 
@@ -37,9 +38,10 @@ public class UploadToy extends AppCompatActivity {
 
             DbManager db = new DbManager(this);
 
+            String parse=cost.getText().toString();
+            double newcost=Double.parseDouble(parse);
 
-
-           db.insertToy(name.getText().toString(), tags.getText().toString(), description.getText().toString(),50, image.getText().toString(), location.getText().toString(),Integer.parseInt("x"), "test");
+           db.insertToy(name.getText().toString(), tags.getText().toString(), description.getText().toString(),newcost, image.getText().toString(), location.getText().toString(),Integer.parseInt("0"), "test");
 
             Toast.makeText(this,"added", Toast.LENGTH_LONG).show();
             name.setText("");

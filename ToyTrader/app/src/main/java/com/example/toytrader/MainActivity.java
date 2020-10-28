@@ -18,10 +18,13 @@ public class MainActivity extends AppCompatActivity {
     public void uploadToy(View view) {
         //new DbManager (this);
         DbManager db = new DbManager(this);
+        Intent intent;
+        intent = new Intent(this, UploadToy.class);
+        startActivity(intent);
 
 
        // String res = db.insertEmployee("andy", "andy@yahoo.cim", 9090);
-        db.insertToy("car", "vehivle", "jdshfjh",50, "sljd", "sanjose",9, "test");
+        //db.insertToy("car", "vehivle", "jdshfjh",50, "sljd", "sanjose",9, "test");
 
     }
 }
