@@ -6,10 +6,11 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
-
-public class Dbmanager extends SQLiteOpenHelper {
+public class DbManager extends SQLiteOpenHelper {
     private static String DATABASE_NAME = "ToyTrader.db";
     public static final String TOY_TABLE_NAME = "toy";
     public static final String TOY_ID = "id";
@@ -23,7 +24,7 @@ public class Dbmanager extends SQLiteOpenHelper {
     public static final String USER_ID = "userid";
     public static final String USER_NAME = "username";
 
-    public Dbmanager( Context context) {
+    public DbManager( Context context) {
         super(context, DATABASE_NAME,null , 1);
     }
 
@@ -31,18 +32,28 @@ public class Dbmanager extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
+
+
         db.execSQL(
                 "create table toy( id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "name TEXT NOT NULL, " +
                         "tags TEXT NOT NULL, " +
                         "description TEXT NOT NULL," +
-                        "cost REAL NOT NULL," +
+                        "cost DOUBLE NOT NULL," +
                         "image TEXT NOT NULL," +
                         "datetime REAL NOT NULL," +
                         "location TEXT NOT NULL," +
                         "userid INTEGER NOT NULL," +
                         "username TEXT NOT NULL)"
         );
+
+
+        /*
+        db.execSQL(
+                "create table toy( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, email TEXT NOT NULL, userid INTEGER NOT NULL)"
+        );
+
+         */
 
     }
 
@@ -55,17 +66,41 @@ public class Dbmanager extends SQLiteOpenHelper {
     }
 
     //insert into database
-    public void insertToy(String name, String tag, String description, double cost, String image, String location, int userid, String username) {
+    public String insertEmployee(String name, String email, int number) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name", name);
+        contentValues.put("email", email);
+        contentValues.put("userid", number);
+        Long res = db.insert("toy", null, contentValues);
+        if (res == 1)
+            return "failed";
+        else
+            return "toy added";
+    }
+
+    //insert into database
+    public String insertToy(String name, String tag, String description, double cost, String image, String location, int userid, String username) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String query = "insert into toy(id, name, tags, description, cost, image, datetime, location, userid, username)" +" "+
-                "values(null, " + name + ", " + tag + ", " + description + ", " + cost + ", " + image + ", julianday('now'), " + location + ", " + userid + ", " + username + ");";
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
 
-        System.out.println("insert toy");
-        db.execSQL(query);
-
-
-
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name", name);
+        contentValues.put("tags", tag);
+        contentValues.put("description", description);
+        contentValues.put("cost",cost);
+        contentValues.put("image", image);
+        contentValues.put("datetime", dateFormat.format(date));
+        contentValues.put("location",location);
+        contentValues.put("userid",userid);
+        contentValues.put("username",username);
+        Long res = db.insert("toy", null, contentValues);
+        if (res == 1)
+            return "failed";
+        else
+            return "toy added";
 
 
 
