@@ -1,5 +1,7 @@
 com/example/toytrader/BuildConfig.java
  com.example.toytrader.BuildConfig
+com/example/toytrader/UploadToy.java
+ com.example.toytrader.UploadToy
 com/example/toytrader/Dbmanager.java
  com.example.toytrader.Dbmanager
 com/example/toytrader/MainActivity.java

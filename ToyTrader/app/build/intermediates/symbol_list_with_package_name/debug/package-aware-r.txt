@@ -1279,6 +1279,8 @@ id beginning
 id blocking
 id bottom
 id bounce
+id button
+id button2
 id buttonPanel
 id cache_measures
 id center
@@ -1297,6 +1299,7 @@ id content
 id contentPanel
 id coordinator
 id cos
+id costtext
 id custom
 id customPanel
 id decelerate
@@ -1305,6 +1308,7 @@ id decor_content_parent
 id default_activity_button
 id deltaRelative
 id dependency_ordering
+id descriptiontext
 id design_bottom_sheet
 id design_menu_item_action_area
 id design_menu_item_action_area_stub
@@ -1361,6 +1365,7 @@ id ifRoom
 id ignore
 id ignoreRequest
 id image
+id imagesrc
 id info
 id invisible
 id italic
@@ -1384,6 +1389,7 @@ id linearLayout6
 id linearLayout7
 id listMode
 id list_item
+id locationtext
 id login_btn
 id login_btn2
 id login_text
@@ -1395,6 +1401,7 @@ id motion_base
 id mtrl_child_content_container
 id mtrl_internal_children_alpha_tag
 id multiply
+id nametext
 id nav_chat
 id nav_message
 id nav_profile
@@ -1495,6 +1502,7 @@ id tag_screen_reader_focusable
 id tag_transition_group
 id tag_unhandled_key_event_manager
 id tag_unhandled_key_listeners
+id tagstext
 id text
 id text2
 id textSpacerNoButtons
@@ -1597,6 +1605,7 @@ layout action_bar
 layout activity_login
 layout activity_main
 layout activity_register
+layout activity_upload_toy
 layout activity_user_home
 layout custom_dialog
 layout design_bottom_navigation_item
