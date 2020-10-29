@@ -13,6 +13,9 @@ public class UploadToy extends AppCompatActivity {
 
     EditText name, tags, location, cost, description, image;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,16 +27,21 @@ public class UploadToy extends AppCompatActivity {
         cost = (EditText) findViewById(R.id.costtext);
         description = (EditText) findViewById(R.id.descriptiontext);
         image = (EditText) findViewById(R.id.imagesrc);
+
+
+
     }
 
 
         //add record to database
         public void addToy(View view) {
-            String parcecost= cost.getText().toString();
-            double newcost=Double.parseDouble(parcecost);
-            Dbmanager db = new Dbmanager(this);
 
-           db.insertToy(name.getText().toString(), tags.getText().toString(), description.getText().toString(),newcost, image.getText().toString(), location.getText().toString(),Integer.parseInt("x"), "test");
+            DbManager db = new DbManager(this);
+
+            String parse=cost.getText().toString();
+            double newcost=Double.parseDouble(parse);
+
+           db.insertToy(name.getText().toString(), tags.getText().toString(), description.getText().toString(),newcost, image.getText().toString(), location.getText().toString(),Integer.parseInt("0"), "test");
 
             Toast.makeText(this,"added", Toast.LENGTH_LONG).show();
             name.setText("");
