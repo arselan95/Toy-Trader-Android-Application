@@ -12,12 +12,12 @@ com/example/toytrader/RegisterActivity.java
  com.example.toytrader.RegisterActivity
  com.example.toytrader.RegisterActivity$1
  com.example.toytrader.RegisterActivity$2
-com/example/toytrader/UserHomeActivity.java
- com.example.toytrader.UserHomeActivity
+com/example/toytrader/Toy.java
+ com.example.toytrader.Toy
 com/example/toytrader/ToyCategoriesFragment.java
  com.example.toytrader.ToyCategoriesFragment
 com/example/toytrader/LoginActivity.java
  com.example.toytrader.LoginActivity
  com.example.toytrader.LoginActivity$1
-com/example/toytrader/Toy.java
- com.example.toytrader.Toy
+com/example/toytrader/UserHomeActivity.java
+ com.example.toytrader.UserHomeActivity
