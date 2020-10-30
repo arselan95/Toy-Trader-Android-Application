@@ -32,6 +32,10 @@
         "source": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png"
     },
     {
+        "merged": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/build/intermediates/res/merged/debug/layout_fragment_toy_categories.xml.flat",
+        "source": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/src/main/res/layout/fragment_toy_categories.xml"
+    },
+    {
         "merged": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/build/intermediates/res/merged/debug/drawable_ic_baseline_chat.xml.flat",
         "source": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/src/main/res/drawable/ic_baseline_chat.xml"
     },
@@ -48,12 +52,12 @@
         "source": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml"
     },
     {
-        "merged": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/build/intermediates/res/merged/debug/layout_activity_user_home.xml.flat",
-        "source": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/src/main/res/layout/activity_user_home.xml"
-    },
-    {
         "merged": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/build/intermediates/res/merged/debug/drawable_main.jpg.flat",
         "source": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/src/main/res/drawable/main.jpg"
+    },
+    {
+        "merged": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/build/intermediates/res/merged/debug/layout_activity_user_home.xml.flat",
+        "source": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/src/main/res/layout/activity_user_home.xml"
     },
     {
         "merged": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/build/intermediates/res/merged/debug/drawable_ic_profile.xml.flat",
@@ -84,8 +88,16 @@
         "source": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/src/main/res/layout/activity_main.xml"
     },
     {
+        "merged": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/build/intermediates/res/merged/debug/drawable_dolls.jpg.flat",
+        "source": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/src/main/res/drawable/dolls.jpg"
+    },
+    {
         "merged": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/build/intermediates/res/merged/debug/menu_drawer_menu.xml.flat",
         "source": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/src/main/res/menu/drawer_menu.xml"
+    },
+    {
+        "merged": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/build/intermediates/res/merged/debug/drawable_softoys.jpg.flat",
+        "source": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/src/main/res/drawable/softoys.jpg"
     },
     {
         "merged": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/build/intermediates/res/merged/debug/drawable-v24_ic_launcher_foreground.xml.flat",
@@ -94,6 +106,14 @@
     {
         "merged": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher_round.png.flat",
         "source": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/src/main/res/mipmap-hdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/build/intermediates/res/merged/debug/drawable_party_toys.jpg.flat",
+        "source": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/src/main/res/drawable/party_toys.jpg"
+    },
+    {
+        "merged": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/build/intermediates/res/merged/debug/drawable_vehicle.jpg.flat",
+        "source": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/src/main/res/drawable/vehicle.jpg"
     },
     {
         "merged": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/build/intermediates/res/merged/debug/drawable_ic_message.xml.flat",
@@ -114,5 +134,9 @@
     {
         "merged": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/build/intermediates/res/merged/debug/drawable_ic_add.xml.flat",
         "source": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/src/main/res/drawable/ic_add.xml"
+    },
+    {
+        "merged": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/build/intermediates/res/merged/debug/drawable_electronic.jpg.flat",
+        "source": "/Users/kavyashreechandrashekar/Documents/CMPE277/Project/Toy-Trader-Android-Application/ToyTrader/app/src/main/res/drawable/electronic.jpg"
     }
 ]
