@@ -31,7 +31,7 @@ public class UploadToy extends AppCompatActivity {
         public void addToy(View view) {
             String parcecost= cost.getText().toString();
             double newcost=Double.parseDouble(parcecost);
-            Dbmanager db = new Dbmanager(this);
+            DBManager db = new DBManager(this);
 
            db.insertToy(name.getText().toString(), tags.getText().toString(), description.getText().toString(),newcost, image.getText().toString(), location.getText().toString(),Integer.parseInt("x"), "test");
 
