@@ -44,10 +44,6 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
 
         getSupportFragmentManager().beginTransaction().
                 replace(R.id.fragment_container,new ToyCategoriesFragment()).commit();
-//        FirebaseHelper.getInstance().getDetailsForCurrentUser();
-        Map m = new HashMap<String, Object>();
-        m.put("address", "office");
-        FirebaseHelper.getInstance().updateDetailsForCurrentUser(m);
 
     }
 

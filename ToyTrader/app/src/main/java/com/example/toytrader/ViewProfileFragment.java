@@ -4,13 +4,14 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class ViewProfileFragment extends Fragment {
+public class ViewProfileFragment extends Fragment implements FirebaseListener {
     private Button editProfileButton;
     private TextView changePasswordText;
 
@@ -24,6 +25,7 @@ public class ViewProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_view_profile, container, false);
+        FirebaseHelper.getInstance().getDetailsForCurrentUser();
         editProfileButton = (Button)view.findViewById(R.id.edit_profile_btn);
         editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,5 +44,12 @@ public class ViewProfileFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public <T> void getFBData(T event) {
+        if (event != null){
+            System.out.println(event);
+        }
     }
 }

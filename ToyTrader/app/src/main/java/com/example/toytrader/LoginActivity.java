@@ -23,8 +23,6 @@ public class LoginActivity extends AppCompatActivity implements FirebaseListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        onClickRegisterText();
-        onClickLoginButton();
         setupAllViews();
         setupTextWatchers();
         setupOnClickListeners();
@@ -85,17 +83,7 @@ public class LoginActivity extends AppCompatActivity implements FirebaseListener
         });
     }
 
-    public void onClickLoginButton(){
-        loginButton = (Button) findViewById(R.id.login_btn2);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent (".UserHomeActivity");
-                startActivity(intent);
-            }
-        });
-    }
-}
+
     @Override
     public <T> void getFBData(T event) {
         spinner.setVisibility(View.GONE);
