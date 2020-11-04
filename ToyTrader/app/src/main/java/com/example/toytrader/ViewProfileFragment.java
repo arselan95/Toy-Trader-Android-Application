@@ -11,9 +11,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Map;
+
 public class ViewProfileFragment extends Fragment implements FirebaseListener {
     private Button editProfileButton;
     private TextView changePasswordText;
+    private TextView firstName;
+    private TextView lastName;
+    private TextView email;
+    private TextView address;
+    private TextView pincode;
+    private TextView phone;
 
     public ViewProfileFragment() {
         // Required empty public constructor
@@ -25,7 +33,8 @@ public class ViewProfileFragment extends Fragment implements FirebaseListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_view_profile, container, false);
-        FirebaseHelper.getInstance().getDetailsForCurrentUser();
+        final ViewProfileFragment fragment = this;
+        FirebaseHelper.getInstance().getDetailsForCurrentUser(fragment);
         editProfileButton = (Button)view.findViewById(R.id.edit_profile_btn);
         editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +58,25 @@ public class ViewProfileFragment extends Fragment implements FirebaseListener {
     @Override
     public <T> void getFBData(T event) {
         if (event != null){
-            System.out.println(event);
+            Map m = (Map)event;
+            System.out.println(m);
+            firstName = (TextView)getView().findViewById(R.id.first_name_view_txt);
+            firstName.setText(m.get("first_name").toString());
+
+            lastName = (TextView)getView().findViewById(R.id.last_name_view_txt);
+            lastName.setText(m.get("last_name").toString());
+
+            phone = (TextView)getView().findViewById(R.id.phone_view_txt);
+            phone.setText(m.get("phoneno").toString());
+
+            address = (TextView)getView().findViewById(R.id.address_view_txt);
+            address.setText(m.get("address").toString());
+
+            email = (TextView)getView().findViewById(R.id.email_view_text);
+            email.setText(m.get("email").toString());
+
+            pincode = (TextView)getView().findViewById(R.id.pincode_view_txt);
+            pincode.setText(m.get("pincode").toString());
         }
     }
 }
