@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -24,7 +25,8 @@ import java.util.Map;
 
 public class UserHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
-    private ImageView softtoyButton;
+    private Button softtoyButton;
+    String category="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,14 +93,75 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
         return true;
     }
 
-    public void testToyView()
+
+    public void openVehicleCategory(View v)
     {
 
-        softtoyButton =(ImageView)findViewById(R.id.softtoyimageView2);
+        category= "vehicle";
+        softtoyButton =(Button)v.findViewById(R.id.vehicles17);
         softtoyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(".ToyView");
+                Intent intent = new Intent(".CategoryView");
+                intent.putExtra("toy",category);
+                startActivity(intent);
+            }
+        });
+    }
+    public void openSoftToyCategory(View v)
+    {
+        category="softtoy";
+        softtoyButton =(Button)v.findViewById(R.id.softtoy13);
+        softtoyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(".CategoryView");
+                intent.putExtra("toy",category);
+                startActivity(intent);
+            }
+        });
+    }
+    public void openPartyCategory(View v)
+    {
+
+        category="partytoy";
+        softtoyButton =(Button)v.findViewById(R.id.partytoys19);
+        softtoyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(".CategoryView");
+                intent.putExtra("toy",category);
+
+                startActivity(intent);
+            }
+        });
+    }
+    public void openDollsCategory(View v)
+    {
+
+        category="dolls";
+        softtoyButton =(Button)v.findViewById(R.id.dolls14);
+        softtoyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(".CategoryView");
+                intent.putExtra("toy",category);
+
+                startActivity(intent);
+            }
+        });
+    }
+    public void openElectronicsCategory(View v)
+    {
+
+        category="electronics";
+        softtoyButton =(Button)v.findViewById(R.id.electronics15);
+        softtoyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(".CategoryView");
+                intent.putExtra("toy",category);
+
                 startActivity(intent);
             }
         });

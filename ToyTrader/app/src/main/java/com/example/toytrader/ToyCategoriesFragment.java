@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 public class ToyCategoriesFragment extends Fragment {
-    private ImageView softtoyButton;
+    private Button softtoyButton;
     LayoutInflater inflater;
     View v;
 
@@ -31,6 +31,19 @@ public class ToyCategoriesFragment extends Fragment {
         // Inflate the layout for this fragment
         v= inflater.inflate(R.layout.fragment_toy_categories, container, false);
         return inflater.inflate(R.layout.fragment_toy_categories, container, false);
+    }
+
+    public void testToyView(View v)
+    {
+
+        softtoyButton =(Button)v.findViewById(R.id.softtoy13);
+        softtoyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(".ToyView");
+                startActivity(intent);
+            }
+        });
     }
 
 
