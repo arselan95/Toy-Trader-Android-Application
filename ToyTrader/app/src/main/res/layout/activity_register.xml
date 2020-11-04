@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".RegisterActivity">
 
     <LinearLayout
@@ -29,8 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:importantForAutofill="no" />
+            android:importantForAutofill="no"
+            android:inputType="textPersonName" />
     </LinearLayout>
 
     <LinearLayout
@@ -47,9 +48,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:paddingStart="10dp"
             android:paddingLeft="10dp"
-            android:text="@string/last_name"
-            android:paddingStart="10dp" />
+            android:text="@string/last_name" />
 
         <EditText
             android:id="@+id/lastName_txt"
@@ -74,9 +75,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:paddingStart="10dp"
             android:paddingLeft="10dp"
-            android:text="Email"
-            android:paddingStart="10dp" />
+            android:text="Email" />
 
         <EditText
             android:id="@+id/email_txt"
@@ -101,9 +102,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:paddingStart="10dp"
             android:paddingLeft="10dp"
-            android:text="@string/phone_number"
-            android:paddingStart="10dp" />
+            android:text="@string/phone_number" />
 
         <EditText
             android:id="@+id/editTextPhone"
@@ -128,9 +129,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:paddingStart="10dp"
             android:paddingLeft="10dp"
-            android:text="@string/address"
-            android:paddingStart="10dp" />
+            android:text="@string/address" />
 
         <EditText
             android:id="@+id/editTextTextMultiLine"
@@ -199,6 +200,6 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="Already have an account? Login"
-            android:textColor="@color/colorAccent" />
+            android:textColor="@color/colorPrimaryDark" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

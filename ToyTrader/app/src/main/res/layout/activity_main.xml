@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="30dp"
-        android:text="The place where you buys toys for yourself and your beloved ones at lesser cost and more happyness"
+        android:text="The best way to make children happy by giving them wonderful toys"
         android:textColor="@android:color/darker_gray"
         android:textSize="20sp" />
 
