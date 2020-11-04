@@ -44,7 +44,6 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
 
         getSupportFragmentManager().beginTransaction().
                 replace(R.id.fragment_container,new ToyCategoriesFragment()).commit();
-
     }
 
 
