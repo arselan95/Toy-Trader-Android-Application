@@ -14,9 +14,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -40,6 +44,11 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
 
         getSupportFragmentManager().beginTransaction().
                 replace(R.id.fragment_container,new ToyCategoriesFragment()).commit();
+//        FirebaseHelper.getInstance().getDetailsForCurrentUser();
+        Map m = new HashMap<String, Object>();
+        m.put("address", "office");
+        FirebaseHelper.getInstance().updateDetailsForCurrentUser(m);
+
     }
 
 
@@ -76,6 +85,12 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
                 startActivity(intent2);
                 break;
 
+            case R.id.nav_logout:
+                FirebaseHelper.getInstance().cleanUpForLogout();
+                intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                this.finish();
+                break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
