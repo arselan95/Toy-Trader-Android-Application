@@ -83,6 +83,7 @@ public class LoginActivity extends AppCompatActivity implements FirebaseListener
         });
     }
 
+
     @Override
     public <T> void getFBData(T event) {
         spinner.setVisibility(View.GONE);

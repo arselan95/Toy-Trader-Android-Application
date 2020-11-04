@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     android:gravity="center|center_horizontal"
     android:orientation="vertical"
     tools:context=".LoginActivity">
@@ -51,7 +52,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/new_user_register_instead"
-        android:textColor="@color/colorAccent" />
+        android:textColor="@color/colorPrimaryDark" />
 
     <Button
         android:id="@+id/login_button"

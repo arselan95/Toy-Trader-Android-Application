@@ -12,24 +12,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class UserHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class ProfileActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout drawer;
-    private ImageView softtoyButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_home);
+        setContentView(R.layout.activity_profile);
 
         Toolbar toolbar = findViewById(R.id.action_bar);
         setSupportActionBar(toolbar);
@@ -43,16 +34,15 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
         toggle.syncState();
 
         getSupportFragmentManager().beginTransaction().
-                replace(R.id.fragment_container,new ToyCategoriesFragment()).commit();
+                replace(R.id.profile_fragment,new ViewProfileFragment()).commit();
     }
-
 
     @Override
     public void onBackPressed() {
         if(drawer.isDrawerOpen(GravityCompat.START)){
             drawer.closeDrawer(GravityCompat.START);
         } else
-        super.onBackPressed();
+            super.onBackPressed();
     }
 
     @Override
@@ -70,39 +60,17 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
+            case R.id.home:
+                Intent home = new Intent(this, UserHomeActivity.class);
+                startActivity(home);
+                break;
             case R.id.add_toys:
                 Intent intent;
                 intent = new Intent(this, UploadToy.class);
                 startActivity(intent);
                 break;
-            case R.id.nav_profile:
-                Intent intent2 = new Intent(this, ProfileActivity.class);
-                startActivity(intent2);
-                break;
-
-            case R.id.nav_logout:
-                FirebaseHelper.getInstance().cleanUpForLogout();
-                intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                this.finish();
-                break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    public void testToyView()
-    {
-
-        softtoyButton =(ImageView)findViewById(R.id.softtoyimageView2);
-        softtoyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(".ToyView");
-                startActivity(intent);
-            }
-        });
-    }
-
-
 }

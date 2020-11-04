@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".ToyCategoriesFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -31,8 +32,9 @@
             android:layout_height="wrap_content"
             android:padding="10sp"
             android:text="Toys Categories"
-            android:textColor="@color/colorAccent"
-            android:textSize="18sp" />
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -78,7 +80,9 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="Soft Toys"
-                                android:textColor="@color/colorPrimary" />
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -108,7 +112,9 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="Dolls"
-                                android:textColor="@color/colorPrimary" />
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
@@ -138,7 +144,7 @@
                                 android:layout_width="200dp"
                                 android:layout_height="200dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/vehicle" />
+                                android:src="@drawable/vehicle4" />
 
                             <TextView
                                 android:id="@+id/textView17"
@@ -146,7 +152,9 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="Vehicles Toys"
-                                android:textColor="@color/colorPrimary" />
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -176,7 +184,9 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="Electronic toys"
-                                android:textColor="@color/colorPrimary" />
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
@@ -214,7 +224,9 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="Party Toys"
-                                android:textColor="@color/colorPrimary" />
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
