@@ -23,9 +23,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.Executor;
-
 
 public class FirebaseHelper {
 
@@ -34,7 +34,9 @@ public class FirebaseHelper {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseUser user;
     private FirebaseListener fbl;
-    private FirebaseHelper() {}
+
+    private FirebaseHelper() {
+    }
 
     public static FirebaseHelper getInstance() {
         if (fireStoreHelper == null) {
@@ -47,7 +49,7 @@ public class FirebaseHelper {
         return mAuth;
     }
 
-    public void signupWith(String email, String password, final FirebaseListener fbl) {
+    public void signupWith(String email, String password, final Map data, final FirebaseListener fbl) {
         this.fbl = fbl;
         final Task<AuthResult> authResultTask = mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -57,7 +59,7 @@ public class FirebaseHelper {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             user = mAuth.getCurrentUser();
-                            fbl.getFBData(user);
+                            setupUserDataAfterSignup(user.getUid(), data, fbl);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -65,13 +67,39 @@ public class FirebaseHelper {
                             fbl.getFBData(null);
                         }
                     }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
+    }
+
+    public void cleanUpForLogout() {
+        mAuth.signOut();
+    }
+
+    private void setupUserDataAfterSignup(String id, Map userData, final FirebaseListener fbl) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference userRef = db.collection("users");
+        userRef.document(id).set(userData).addOnSuccessListener(new OnSuccessListener() {
+            @Override
+            public void onSuccess(Object o) {
+                fbl.getFBData(user);
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
                 });
     }
 
     public void signinWith(String email, String password, final FirebaseListener fbl) {
         this.fbl = fbl;
         final Task<AuthResult> authResultTask = mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -86,6 +114,11 @@ public class FirebaseHelper {
                             fbl.getFBData(null);
                         }
                     }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
                 });
     }
 
@@ -93,7 +126,6 @@ public class FirebaseHelper {
         this.fbl = fbl;
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference toysRef = db.collection("toys");
-
         toysRef.add(toyDetails).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
@@ -127,6 +159,48 @@ public class FirebaseHelper {
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
                 }
+            }
+        });
+    }
+
+    public void getDetailsForCurrentUser() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference userRef = db.collection("users");
+        userRef.document(mAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot d = (DocumentSnapshot)task.getResult();
+                    Map m = d.getData();
+                    fbl.getFBData(m);
+                } else {
+                    fbl.getFBData(null);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                fbl.getFBData(null);
+            }
+        });
+    }
+
+    public void updateDetailsForCurrentUser(Map userData) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference userRef = db.collection("users");
+        userRef.document(mAuth.getCurrentUser().getUid()).update(userData).addOnCompleteListener(new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+                if (task.isSuccessful()) {
+                    fbl.getFBData(true);
+                } else {
+                    fbl.getFBData(null);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                fbl.getFBData(null);
             }
         });
     }
