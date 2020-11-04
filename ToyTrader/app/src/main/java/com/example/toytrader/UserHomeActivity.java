@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -71,8 +72,12 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
                 intent = new Intent(this, UploadToy.class);
                 startActivity(intent);
                 break;
-
-
+            case R.id.nav_logout:
+                FirebaseHelper.getInstance().cleanUpForLogout();
+                intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                this.finish();
+                break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

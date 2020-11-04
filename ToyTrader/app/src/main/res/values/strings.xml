@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Toy Trader</string>
     <string name="login">Login</string>
-    <string name="username">Username</string>
+    <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="register">Register</string>
     <string name="first_name">First Name</string>

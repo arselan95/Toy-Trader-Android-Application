@@ -10,12 +10,21 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity implements FirebaseListener {
     private TextView loginText;
     private EditText email, password, firstName, lastName, phoneNumber, address, pinCode;
     private Button registerButton;
+    private ProgressBar spinner;
+
+    private ArrayList<EditText> aed;
+    private Map<String, Object> data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +46,17 @@ public class RegisterActivity extends AppCompatActivity implements FirebaseListe
         pinCode = findViewById(R.id.register_pincode);
         loginText = (TextView)findViewById(R.id.login_text);
         registerButton =(Button)findViewById(R.id.register_btn);
+        spinner = (ProgressBar) findViewById(R.id.progressBar_cyclic);
+        spinner.setVisibility(View.GONE);
+
+        aed = new ArrayList<EditText>();
+        aed.add(email);
+        aed.add(password);
+        aed.add(firstName);
+        aed.add(lastName);
+        aed.add(phoneNumber);
+        aed.add(address);
+        aed.add(pinCode);
     }
 
     private void setupTextWatchers() {
@@ -66,40 +86,42 @@ public class RegisterActivity extends AppCompatActivity implements FirebaseListe
             @Override
             public void onClick(View view) {
                 if(checkValidations()) {
-                    FirebaseHelper.getInstance().signupWith(email.getText().toString(), password.getText().toString(), la);
+                    spinner.setVisibility(View.GONE);
+                    FirebaseHelper.getInstance().signupWith(email.getText().toString(),
+                                                            password.getText().toString(), data, la);
                 }
             }
         });
     }
 
     private Boolean checkValidations() {
-        // Add Validations
+        for(EditText e : aed) {
+            if(e.getText().toString().isEmpty()) {
+                SnackbarHelper.showMessage("Please enter all the details", getCurrentFocus());
+                return false;
+            }
+        }
+
+        data = new HashMap<String, Object>();
+        data.put("email", email.getText().toString());
+        data.put("address", address.getText().toString());
+        data.put("first_name", firstName.getText().toString());
+        data.put("last_name", lastName.getText().toString());
+        data.put("phoneno", phoneNumber.getText().toString());
+        data.put("pincode", pinCode.getText().toString());
+
         return true;
     }
 
     @Override
     public <T> void getFBData(T event) {
-        System.out.println("Event" + event.toString());
-//                Intent intent = new Intent(".UserHomeActivity");
-//                startActivity(intent);
+        spinner.setVisibility(View.GONE);
+        if(event != null) {
+            Intent intent = new Intent(".UserHomeActivity");
+            startActivity(intent);
+            this.finish();
+        }
     }
 }
 
-
-class CustomTextWatcher implements TextWatcher {
-    private EditText mEditText;
-
-    public CustomTextWatcher(EditText e) {
-        mEditText = e;
-    }
-
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-    }
-
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-    }
-
-    public void afterTextChanged(Editable s) {
-    }
-}
 
