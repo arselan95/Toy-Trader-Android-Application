@@ -81,7 +81,6 @@
                                 android:background="@color/cardview_light_background"
                                 android:gravity="center"
                                 android:onClick="openSoftToyCategory"
-                                tools:ignore="OnClick"
                                 android:text="Soft Toys"
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="18sp"
@@ -120,7 +119,6 @@
                                 android:textStyle="bold"
                                 android:background="@color/cardview_light_background"
                                 android:onClick="openDollsCategory"
-                                tools:ignore="OnClick"
                                 />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -164,7 +162,6 @@
                                 android:textStyle="bold"
                                 android:background="@color/cardview_light_background"
                                 android:onClick="openVehicleCategory"
-                                tools:ignore="OnClick"
                                 />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -200,7 +197,6 @@
                                 android:textStyle="bold"
                                 android:background="@color/cardview_light_background"
                                 android:onClick="openElectronicsCategory"
-                                tools:ignore="OnClick"
                                 />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -244,7 +240,7 @@
                                 android:textStyle="bold"
                                 android:background="@color/cardview_light_background"
                                 android:onClick="openPartyCategory"
-                                tools:ignore="OnClick" />
+                                 />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
