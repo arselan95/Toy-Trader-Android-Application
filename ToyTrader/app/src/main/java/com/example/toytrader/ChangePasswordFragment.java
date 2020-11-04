@@ -11,22 +11,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-public class EditProfileFragment extends Fragment {
-
-    private Button saveButton;
-    private Button cancelButton;
-
-    public EditProfileFragment() {
+public class ChangePasswordFragment extends Fragment {
+    private Button savePasswordBtn;
+    private Button cancelPasswordBtn;
+    public ChangePasswordFragment() {
         // Required empty public constructor
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_change_password, container, false);
 
-        saveButton = (Button)view.findViewById(R.id.save_btn);
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        savePasswordBtn = (Button)view.findViewById(R.id.save_pass_btn);
+        savePasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getActivity().getSupportFragmentManager().beginTransaction().
@@ -34,8 +33,8 @@ public class EditProfileFragment extends Fragment {
             }
         });
 
-        cancelButton = (Button)view.findViewById(R.id.cancel_btn);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
+        cancelPasswordBtn = (Button)view.findViewById(R.id.cancel_pass_btn);
+        cancelPasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
