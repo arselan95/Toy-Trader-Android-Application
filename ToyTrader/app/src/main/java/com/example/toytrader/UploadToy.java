@@ -32,7 +32,6 @@ public class UploadToy extends AppCompatActivity implements AdapterView.OnItemSe
     private static final String[] paths = {"Vehicle", "Soft toys", "Party Toys", "Dolls", "Electronics"};
     private DrawerLayout drawer;
     String category="";
-    private Button addtoybutton;
 
 
     @Override
