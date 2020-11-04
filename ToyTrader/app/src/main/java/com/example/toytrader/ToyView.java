@@ -1,5 +1,12 @@
 package com.example.toytrader;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,25 +14,24 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class UserHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class ToyView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+
     private DrawerLayout drawer;
-    private ImageView softtoyButton;
+    TextView tisname;
+    TextView tiscategory;
+    TextView tisdescription;
+    TextView tiscost;
+    TextView tislocation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_home);
+        setContentView(R.layout.activity_toy_view);
 
         Toolbar toolbar = findViewById(R.id.action_bar);
         setSupportActionBar(toolbar);
@@ -38,21 +44,40 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        getSupportFragmentManager().beginTransaction().
-                replace(R.id.fragment_container,new ToyCategoriesFragment()).commit();
-    }
 
+         tisname= (TextView)findViewById(R.id.toyviewnametextview);
+         tiscategory= (TextView)findViewById(R.id.categorytextview);
+         tisdescription= (TextView)findViewById(R.id.descriptiontextview);
+         tiscost= (TextView)findViewById(R.id.costtextview);
+         tislocation= (TextView)findViewById(R.id.locationtextview);
+
+        /*
+        GET DATABASE VALUES HERE
+         */
+
+        String nam="toy name";
+        String cat=" vehicle ";
+        String cos=" 15$ ";
+        String desc=" some description here..... ";
+        String loca="San Jose ";
+
+       tisname.setText(nam);
+       tiscategory.setText(cat);
+       tisdescription.setText( desc);
+       tiscost.setText(cos);
+       tislocation.setText(loca);
+    }
 
     @Override
     public void onBackPressed() {
         if(drawer.isDrawerOpen(GravityCompat.START)){
             drawer.closeDrawer(GravityCompat.START);
         } else
-        super.onBackPressed();
+            super.onBackPressed();
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected( MenuItem item) {
         return super.onOptionsItemSelected(item);
     }
 
@@ -64,7 +89,7 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()){
             case R.id.add_toys:
                 Intent intent;
@@ -77,19 +102,4 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    public void testToyView()
-    {
-
-        softtoyButton =(ImageView)findViewById(R.id.softtoyimageView2);
-        softtoyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(".ToyView");
-                startActivity(intent);
-            }
-        });
-    }
-
-
 }
