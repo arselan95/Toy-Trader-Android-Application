@@ -19,6 +19,9 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class UserHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     private ImageView softtoyButton;
@@ -41,6 +44,11 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
 
         getSupportFragmentManager().beginTransaction().
                 replace(R.id.fragment_container,new ToyCategoriesFragment()).commit();
+//        FirebaseHelper.getInstance().getDetailsForCurrentUser();
+        Map m = new HashMap<String, Object>();
+        m.put("address", "office");
+        FirebaseHelper.getInstance().updateDetailsForCurrentUser(m);
+
     }
 
 

@@ -23,6 +23,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.Executor;
 
@@ -158,6 +159,48 @@ public class FirebaseHelper {
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
                 }
+            }
+        });
+    }
+
+    public void getDetailsForCurrentUser() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference userRef = db.collection("users");
+        userRef.document(mAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot d = (DocumentSnapshot)task.getResult();
+                    Map m = d.getData();
+                    fbl.getFBData(m);
+                } else {
+                    fbl.getFBData(null);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                fbl.getFBData(null);
+            }
+        });
+    }
+
+    public void updateDetailsForCurrentUser(Map userData) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference userRef = db.collection("users");
+        userRef.document(mAuth.getCurrentUser().getUid()).update(userData).addOnCompleteListener(new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+                if (task.isSuccessful()) {
+                    fbl.getFBData(true);
+                } else {
+                    fbl.getFBData(null);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                fbl.getFBData(null);
             }
         });
     }
