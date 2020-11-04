@@ -163,7 +163,8 @@ public class FirebaseHelper {
         });
     }
 
-    public void getDetailsForCurrentUser() {
+    public void getDetailsForCurrentUser(final FirebaseListener fbl) {
+        this.fbl = fbl;
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference userRef = db.collection("users");
         userRef.document(mAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener() {
@@ -185,7 +186,8 @@ public class FirebaseHelper {
         });
     }
 
-    public void updateDetailsForCurrentUser(Map userData) {
+    public void updateDetailsForCurrentUser(Map userData, final FirebaseListener fbl) {
+        this.fbl = fbl;
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference userRef = db.collection("users");
         userRef.document(mAuth.getCurrentUser().getUid()).update(userData).addOnCompleteListener(new OnCompleteListener() {
