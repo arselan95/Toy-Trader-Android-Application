@@ -14,6 +14,7 @@ import android.widget.ImageView;
 public class ToyCategoriesFragment extends Fragment {
     private Button softtoyButton;
     LayoutInflater inflater;
+    String category="";
     View v;
 
     public ToyCategoriesFragment() {

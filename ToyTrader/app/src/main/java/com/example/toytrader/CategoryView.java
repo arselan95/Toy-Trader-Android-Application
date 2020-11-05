@@ -7,6 +7,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -25,11 +26,11 @@ public class CategoryView extends AppCompatActivity implements NavigationView.On
 
 
     private DrawerLayout drawer;
-    ArrayList<String> toys;
+//    ArrayList<String> toys;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter;
-    private Button myaboutbutton;
+    private TextView myaboutbutton;
 
     String thiscategory="";
     @Override
@@ -50,6 +51,8 @@ public class CategoryView extends AppCompatActivity implements NavigationView.On
 
         Intent i = getIntent();
         thiscategory = i.getStringExtra("toy");
+        System.out.println(thiscategory);
+        ArrayList<Toy> toys = new ArrayList<>();
 
 
 
@@ -61,41 +64,45 @@ public class CategoryView extends AppCompatActivity implements NavigationView.On
 
         //testing values
         if(thiscategory.equals("vehicle")) {
-            toys = new ArrayList<String>();
-            toys.add("Toy vehicle 1");
-            toys.add("Toy vehicle 2");
-            toys.add("Toy vehicle 3");
-            toys.add("Toy vehicle 4");
-            toys.add("Toy vehicle 5");
-            toys.add("Toy vehicle 6");
+//            toys = new ArrayList<String>();
+//            toys.add("Toy vehicle 1");
+//            toys.add("Toy vehicle 2");
+//            toys.add("Toy vehicle 3");
+//            toys.add("Toy vehicle 4");
+//            toys.add("Toy vehicle 5");
+//            toys.add("Toy vehicle 6");
         }
 
         else if(thiscategory.equals("softtoy")) {
-            toys = new ArrayList<String>();
-            toys.add("Toy soft toy 1");
-            toys.add("Toy soft toy 2");
+            toys.add(new Toy(R.drawable.b3, "Toy 1", "Soft teddy of 2 years old"));
+            toys.add(new Toy(R.drawable.b3, "Toy 2", "Soft teddy of 2 years old"));
+//            toys = new ArrayList<String>();
+//            toys.add("Toy soft toy 1");
+//            toys.add("Toy soft toy 2");
         }
 
         else if(thiscategory.equals("partytoy")) {
-            toys = new ArrayList<String>();
-            toys.add("Toy party toy 1");
-            toys.add("Toy party toy 2");
+            toys.add(new Toy(R.drawable.b3, "Toy 1", "Soft teddy of 2 years old"));
+            toys.add(new Toy(R.drawable.b3, "Toy 2", "Soft teddy of 2 years old"));
+//            toys = new ArrayList<String>();
+//            toys.add("Toy party toy 1");
+//            toys.add("Toy party toy 2");
         }
 
        else  if(thiscategory.equals("dolls")) {
-            toys = new ArrayList<String>();
-            toys.add("Toy doll 1");
-            toys.add("Toy doll 2");
+//            toys = new ArrayList<String>();
+//            toys.add("Toy doll 1");
+//            toys.add("Toy doll 2");
         }
 
        else if(thiscategory.equals("electronics")) {
-            toys = new ArrayList<String>();
-            toys.add("Toy electronic 1");
-            toys.add("Toy electronic 2");
+//            toys = new ArrayList<String>();
+//            toys.add("Toy electronic 1");
+//            toys.add("Toy electronic 2");
         }
 
         layoutManager=new LinearLayoutManager(this);
-        adapter=new MainAdapter(toys);
+        adapter=new ToysAdapter(toys);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
@@ -154,7 +161,7 @@ public class CategoryView extends AppCompatActivity implements NavigationView.On
     public void aboutToy(View v)
 
     {
-        myaboutbutton =(Button)v.findViewById(R.id.aboutbutton);
+        myaboutbutton =(TextView) v.findViewById(R.id.aboutText);
         myaboutbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
