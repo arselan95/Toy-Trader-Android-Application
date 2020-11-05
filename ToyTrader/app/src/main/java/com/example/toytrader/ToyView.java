@@ -104,10 +104,30 @@ public class ToyView extends AppCompatActivity implements NavigationView.OnNavig
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()){
+            case R.id.home:
+                Intent home = new Intent(this, UserHomeActivity.class);
+                startActivity(home);
+                break;
             case R.id.add_toys:
                 Intent intent;
                 intent = new Intent(this, UploadToy.class);
                 startActivity(intent);
+                break;
+            case R.id.nav_profile:
+                Intent intent2 = new Intent(this, ProfileActivity.class);
+                startActivity(intent2);
+                break;
+
+            case R.id.nav_cart:
+                intent = new Intent(this, CartActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.nav_logout:
+                FirebaseHelper.getInstance().cleanUpForLogout();
+                intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                this.finish();
                 break;
 
         }
