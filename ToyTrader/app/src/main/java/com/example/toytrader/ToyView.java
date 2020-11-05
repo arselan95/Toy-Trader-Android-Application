@@ -1,7 +1,10 @@
 package com.example.toytrader;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,6 +32,8 @@ public class ToyView extends AppCompatActivity implements NavigationView.OnNavig
     TextView tiscost;
     TextView tislocation;
     private Button addcart;
+
+
 
 
     @Override
@@ -124,6 +129,17 @@ public class ToyView extends AppCompatActivity implements NavigationView.OnNavig
 
        REFRESH THIS PAGE
          */
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("name",tisname.getText().toString());
+        editor.putString("category",tiscategory.getText().toString());
+        editor.putString("description",tisdescription.getText().toString());
+        editor.putString("cost",tiscost.getText().toString());
+        editor.putString("location",tislocation.getText().toString());
+        editor.apply();
+
+
         addcart =(Button)v.findViewById(R.id.addtocartbutton);
         addcart.setOnClickListener(new View.OnClickListener() {
             @Override

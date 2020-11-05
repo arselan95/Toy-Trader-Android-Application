@@ -177,20 +177,12 @@
                             android:onClick="addToCart"
                             />
                         </LinearLayout>
-
                     </LinearLayout>
-
-
-
                 </ScrollView>
 
             </LinearLayout>
 
-
         </FrameLayout>
-
-
-
 
     </LinearLayout>
     <com.google.android.material.navigation.NavigationView
@@ -200,11 +192,6 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu" />
-
-
-
-
-
 
 
 </androidx.drawerlayout.widget.DrawerLayout>
