@@ -79,4 +79,9 @@ public class ViewProfileFragment extends Fragment implements FirebaseListener {
             pincode.setText(m.get("pincode").toString());
         }
     }
+
+    @Override
+    public <T> void updateFBResult(T event) {
+
+    }
 }

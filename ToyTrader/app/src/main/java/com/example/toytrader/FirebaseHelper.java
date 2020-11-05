@@ -194,15 +194,15 @@ public class FirebaseHelper {
             @Override
             public void onComplete(@NonNull Task task) {
                 if (task.isSuccessful()) {
-                    fbl.getFBData(true);
+                    fbl.updateFBResult(true);
                 } else {
-                    fbl.getFBData(null);
+                    fbl.updateFBResult(false);
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                fbl.getFBData(null);
+                fbl.updateFBResult(false);
             }
         });
     }

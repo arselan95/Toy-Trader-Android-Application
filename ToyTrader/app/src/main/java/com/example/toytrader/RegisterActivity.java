@@ -122,6 +122,11 @@ public class RegisterActivity extends AppCompatActivity implements FirebaseListe
             this.finish();
         }
     }
+
+    @Override
+    public <T> void updateFBResult(T event) {
+
+    }
 }
 
 

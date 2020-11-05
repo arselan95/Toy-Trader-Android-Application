@@ -93,5 +93,10 @@ public class LoginActivity extends AppCompatActivity implements FirebaseListener
             this.finish();
         }
     }
+
+    @Override
+    public <T> void updateFBResult(T event) {
+
+    }
 }
 
