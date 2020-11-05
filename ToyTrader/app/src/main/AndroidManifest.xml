@@ -11,14 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ProfileActivity">
-            <intent-filter>
-                <action android:name=".ProfileActivity" />
-            </intent-filter>
-        </activity>
+
         <activity android:name=".CategoryView">
             <intent-filter>
                 <action android:name=".CategoryView" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ProfileActivity">
+            <intent-filter>
+                <action android:name=".ProfileActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
