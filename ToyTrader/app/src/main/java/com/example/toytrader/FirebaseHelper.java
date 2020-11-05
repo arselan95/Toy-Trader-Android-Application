@@ -1,5 +1,6 @@
 package com.example.toytrader;
 
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -12,20 +13,18 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import org.json.JSONObject;
-
-import java.util.ArrayList;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Executor;
 
 public class FirebaseHelper {
 
@@ -34,6 +33,8 @@ public class FirebaseHelper {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseUser user;
     private FirebaseListener fbl;
+    FirebaseStorage storage;
+    StorageReference storageReference;
 
     private FirebaseHelper() {
     }
@@ -47,6 +48,10 @@ public class FirebaseHelper {
 
     public FirebaseAuth getFirebaseAuth() {
         return mAuth;
+    }
+
+    public FirebaseUser getFirebaseUser() {
+        return mAuth.getCurrentUser();
     }
 
     public void signupWith(String email, String password, final Map data, final FirebaseListener fbl) {
@@ -122,7 +127,7 @@ public class FirebaseHelper {
                 });
     }
 
-    public void uploadToyWithData(Map toyDetails, @Nullable final FirebaseListener fbl) {
+    public void uploadToyWithData(Map toyDetails, final Uri selectedImage, @Nullable final FirebaseListener fbl) {
         this.fbl = fbl;
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference toysRef = db.collection("toys");
@@ -130,12 +135,68 @@ public class FirebaseHelper {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+                uploadToyImage(documentReference.getId(), selectedImage);
             }
         })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "Error adding document", e);
+                        fbl.getFBData("Upload Toy failed");
+                    }
+                });
+    }
+
+    public void uploadToyImage(final String toyUID, Uri selectedImage) {
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+        final StorageReference ref = storageReference.child("images/" + toyUID);
+        ref.putFile(selectedImage)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        if(taskSnapshot.getTask().isSuccessful()){
+                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri downloadPhotoUrl) {
+                                    Map m = new HashMap();
+                                    m.put("image", downloadPhotoUrl.toString());
+                                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                    CollectionReference toysRef = db.collection("toys");
+                                    toysRef.document(toyUID).update(m).addOnCompleteListener(new OnCompleteListener() {
+                                        @Override
+                                        public void onComplete(@NonNull Task task) {
+                                            if(task.isSuccessful()) {
+                                                fbl.getFBData(task.isSuccessful());
+                                            }else {
+                                                fbl.getFBData("Upload image failed");
+                                            }
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            fbl.getFBData("Upload image failed");
+                                        }
+                                    });
+                                }
+                            });
+                        }else {
+                            fbl.getFBData("Upload image failed");
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        fbl.getFBData("Upload image failed");
+                    }
+                })
+                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                        double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
+                                .getTotalByteCount());
+
                     }
                 });
     }
@@ -163,6 +224,25 @@ public class FirebaseHelper {
         });
     }
 
+    public void getToysForCategory(String category) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference toysRef = db.collection("toys");
+        toysRef.whereEqualTo("category", category).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Map<String, Object> json = document.getData();
+
+                        Log.d(TAG, document.getId() + " => " + document.getData());
+                    }
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
+        });
+    }
+
     public void getDetailsForCurrentUser(final FirebaseListener fbl) {
         this.fbl = fbl;
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -171,7 +251,7 @@ public class FirebaseHelper {
             @Override
             public void onComplete(@NonNull Task task) {
                 if (task.isSuccessful()) {
-                    DocumentSnapshot d = (DocumentSnapshot)task.getResult();
+                    DocumentSnapshot d = (DocumentSnapshot) task.getResult();
                     Map m = d.getData();
                     fbl.getFBData(m);
                 } else {
