@@ -249,22 +249,22 @@ public class UploadToy extends AppCompatActivity implements AdapterView.OnItemSe
 
     private Boolean checkValidations() {
         if(selectedImage == null) {
-            SnackbarHelper.showMessage("Please select a toy image", this.getCurrentFocus());
+            SnackbarHelper.showMessage("Please select a toy image", this.findViewById(android.R.id.content));
             return false;
         }else if(name.getText().toString().isEmpty()) {
-            SnackbarHelper.showMessage("Please enter toy name", this.getCurrentFocus());
+            SnackbarHelper.showMessage("Please enter toy name", this.findViewById(android.R.id.content));
             return false;
         }else if(category.isEmpty()) {
-            SnackbarHelper.showMessage("Please select a category", this.getCurrentFocus());
+            SnackbarHelper.showMessage("Please select a category", this.findViewById(android.R.id.content));
             return false;
         }else if(description.getText().toString().isEmpty()) {
-            SnackbarHelper.showMessage("Please enter some toy description", this.getCurrentFocus());
+            SnackbarHelper.showMessage("Please enter some toy description", this.findViewById(android.R.id.content));
             return false;
         }else if(cost.getText().toString().isEmpty()) {
-            SnackbarHelper.showMessage("Please enter some cost for the toy", this.getCurrentFocus());
+            SnackbarHelper.showMessage("Please enter some cost for the toy", this.findViewById(android.R.id.content));
             return false;
         }else if(location.getText().toString().isEmpty()) {
-            SnackbarHelper.showMessage("Please enter the address for the toy", this.getCurrentFocus());
+            SnackbarHelper.showMessage("Please enter the address for the toy", this.findViewById(android.R.id.content));
             return false;
         }
         toyData = new HashMap();
@@ -289,9 +289,9 @@ public class UploadToy extends AppCompatActivity implements AdapterView.OnItemSe
     public <T> void getFBData(T event) {
         progressSpinner.setVisibility(View.GONE);
         if(event instanceof String) {
-            SnackbarHelper.showMessage((String) event, this.getCurrentFocus());
+            SnackbarHelper.showMessage((String) event, this.findViewById(android.R.id.content));
         }else if (event instanceof Boolean) {
-            SnackbarHelper.showMessage("Uploaded Successfully! ", this.getCurrentFocus());
+            SnackbarHelper.showMessage("Uploaded Successfully! ", this.findViewById(android.R.id.content));
             Intent i = new Intent(this, UserHomeActivity.class);
             startActivity(i);
             this.finish();
