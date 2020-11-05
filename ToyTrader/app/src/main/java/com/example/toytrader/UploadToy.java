@@ -13,6 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -32,6 +33,7 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -134,7 +136,14 @@ public class UploadToy extends AppCompatActivity implements AdapterView.OnItemSe
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
         switch(requestCode) {
-            case 0:
+            case 0: //Camera
+                if(resultCode == RESULT_OK) {
+                    Bitmap photo = (Bitmap)imageReturnedIntent.getExtras().get("data");
+                    selectedImage = getImageUri(photo);
+                    imageView.setVisibility(View.VISIBLE);
+                    imageView.setImageBitmap(photo);
+                }
+                break;
             case 1:
                 if(resultCode == RESULT_OK){
                     selectedImage = imageReturnedIntent.getData();
@@ -145,6 +154,12 @@ public class UploadToy extends AppCompatActivity implements AdapterView.OnItemSe
         }
     }
 
+    private Uri getImageUri(Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(this.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
