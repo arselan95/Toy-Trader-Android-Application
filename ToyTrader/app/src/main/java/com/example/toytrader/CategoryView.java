@@ -134,12 +134,18 @@ public class CategoryView extends AppCompatActivity implements NavigationView.On
                 startActivity(intent2);
                 break;
 
+            case R.id.nav_cart:
+                intent = new Intent(this, CartActivity.class);
+                startActivity(intent);
+                break;
+
             case R.id.nav_logout:
                 FirebaseHelper.getInstance().cleanUpForLogout();
                 intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 this.finish();
                 break;
+
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

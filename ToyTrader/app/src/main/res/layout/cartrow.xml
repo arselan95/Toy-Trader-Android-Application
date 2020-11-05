@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="left">
+
+        <TextView
+            android:id="@+id/cart_toyname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hello"
+            android:textSize="25sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/cart_toyprice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="price"
+            android:textSize="20sp"
+           android:textStyle="italic"/>
+
+        <TextView
+            android:id="@+id/cart_toylocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hello"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            android:textColor="@color/colorAccent"/>
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/aboutbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="Remove from Cart"
+        android:textColor="@android:color/white"
+        android:layout_marginLeft="200dp"
+        android:padding="9dp"/>
+
+</LinearLayout>

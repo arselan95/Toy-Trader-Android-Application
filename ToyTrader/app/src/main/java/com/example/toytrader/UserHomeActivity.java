@@ -82,6 +82,11 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
                 startActivity(intent2);
                 break;
 
+            case R.id.nav_cart:
+                intent = new Intent(this, CartActivity.class);
+                startActivity(intent);
+                break;
+
             case R.id.nav_logout:
                 FirebaseHelper.getInstance().cleanUpForLogout();
                 intent = new Intent(this, MainActivity.class);

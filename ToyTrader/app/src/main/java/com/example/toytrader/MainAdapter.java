@@ -27,6 +27,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder( MainAdapter.ViewHolder holder, int position) {
         holder.name.setText(s.get(position));
+
     }
 
     @Override
@@ -36,12 +37,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder>{
     public class ViewHolder extends RecyclerView.ViewHolder
     {
 
+
         public TextView name;
 
         public ViewHolder(View itemView)
         {
             super(itemView);
             name= itemView.findViewById(R.id.category_toyname);
+
         }
 
     }
