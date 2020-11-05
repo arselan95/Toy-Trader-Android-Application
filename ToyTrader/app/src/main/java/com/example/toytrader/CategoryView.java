@@ -145,6 +145,10 @@ public class CategoryView extends AppCompatActivity implements NavigationView.On
                 intent = new Intent(this, CartActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.home:
+                Intent home = new Intent(this, UserHomeActivity.class);
+                startActivity(home);
+                break;
 
             case R.id.nav_logout:
                 FirebaseHelper.getInstance().cleanUpForLogout();

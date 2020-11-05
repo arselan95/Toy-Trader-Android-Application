@@ -1,8 +1,11 @@
 package com.example.toytrader;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -10,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -72,7 +76,53 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
+    public void onBackPressed() {
+        if(drawer.isDrawerOpen(GravityCompat.START)){
+            drawer.closeDrawer(GravityCompat.START);
+        } else
+            super.onBackPressed();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        return false;
+        switch (menuItem.getItemId()){
+            case R.id.home:
+                Intent home = new Intent(this, UserHomeActivity.class);
+                startActivity(home);
+                break;
+            case R.id.add_toys:
+                Intent intent;
+                intent = new Intent(this, UploadToy.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_profile:
+                Intent intent2 = new Intent(this, ProfileActivity.class);
+                startActivity(intent2);
+                break;
+
+            case R.id.nav_cart:
+                break;
+
+            case R.id.nav_logout:
+                FirebaseHelper.getInstance().cleanUpForLogout();
+                intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                this.finish();
+                break;
+        }
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

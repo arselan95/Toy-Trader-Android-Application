@@ -131,6 +131,21 @@ public class UploadToy extends AppCompatActivity implements AdapterView.OnItemSe
                 Intent home = new Intent(this, UserHomeActivity.class);
                 startActivity(home);
                 break;
+            case R.id.add_toys:
+                Intent intent;
+                break;
+
+            case R.id.nav_cart:
+                intent = new Intent(this, CartActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.nav_logout:
+                FirebaseHelper.getInstance().cleanUpForLogout();
+                intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                this.finish();
+                break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

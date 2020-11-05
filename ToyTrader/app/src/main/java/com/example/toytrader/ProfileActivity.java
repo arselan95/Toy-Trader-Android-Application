@@ -69,6 +69,20 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                 intent = new Intent(this, UploadToy.class);
                 startActivity(intent);
                 break;
+            case R.id.nav_profile:
+                break;
+
+            case R.id.nav_cart:
+                intent = new Intent(this, CartActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.nav_logout:
+                FirebaseHelper.getInstance().cleanUpForLogout();
+                intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                this.finish();
+                break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
