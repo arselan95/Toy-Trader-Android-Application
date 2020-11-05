@@ -31,7 +31,7 @@ public class CategoryView extends AppCompatActivity implements NavigationView.On
     RecyclerView.Adapter adapter;
     private Button myaboutbutton;
 
-    String thiscategory="vehicle";
+    String thiscategory="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

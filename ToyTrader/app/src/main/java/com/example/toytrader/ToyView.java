@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,6 +28,7 @@ public class ToyView extends AppCompatActivity implements NavigationView.OnNavig
     TextView tisdescription;
     TextView tiscost;
     TextView tislocation;
+    private Button addcart;
 
 
     @Override
@@ -58,7 +61,12 @@ public class ToyView extends AppCompatActivity implements NavigationView.OnNavig
         String nam="toy name";
         String cat=" vehicle ";
         String cos=" 15$ ";
-        String desc=" some description here..... ";
+        String desc=" This all new fully rechargeable and powered fun Kidzone ride-on toy car " +
+                "can spin a full 360 degrees with its simple joystick or remote controls. This brilliant little car is built " +
+                "from a tough plastic shell and has a " +
+                "soft bumper outside system allowing you to bump around if you make the wrong turn. " +
+                "ASTM-certified to this bumper car and comprise a safety belt," +
+                " anti-flat tires and Light. Recommended for children aged one and a half and above.";
         String loca="San Jose ";
 
        tisname.setText(nam);
@@ -97,9 +105,32 @@ public class ToyView extends AppCompatActivity implements NavigationView.OnNavig
                 startActivity(intent);
                 break;
 
-
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    public void addToCart(View v)
+    {
+        tisname= (TextView)findViewById(R.id.toyviewnametextview);
+        tiscategory= (TextView)findViewById(R.id.categorytextview);
+        tisdescription= (TextView)findViewById(R.id.descriptiontextview);
+        tiscost= (TextView)findViewById(R.id.costtextview);
+        tislocation= (TextView)findViewById(R.id.locationtextview);
+
+        /*
+       TODO:  ADD to SHARED PREFERENCES / OR SOME LIST
+
+       UPDATE THE CART
+
+       REFRESH THIS PAGE
+         */
+        addcart =(Button)v.findViewById(R.id.addtocartbutton);
+        addcart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(".UserHomeActivity");
+                startActivity(intent);
+            }
+        });
     }
 }

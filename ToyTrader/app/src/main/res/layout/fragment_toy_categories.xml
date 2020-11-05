@@ -119,6 +119,7 @@
                                 android:textStyle="bold"
                                 android:background="@color/cardview_light_background"
                                 android:onClick="openDollsCategory"
+
                                 />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -162,6 +163,7 @@
                                 android:textStyle="bold"
                                 android:background="@color/cardview_light_background"
                                 android:onClick="openVehicleCategory"
+
                                 />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -197,6 +199,7 @@
                                 android:textStyle="bold"
                                 android:background="@color/cardview_light_background"
                                 android:onClick="openElectronicsCategory"
+
                                 />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -240,7 +243,8 @@
                                 android:textStyle="bold"
                                 android:background="@color/cardview_light_background"
                                 android:onClick="openPartyCategory"
-                                 />
+
+                                />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
