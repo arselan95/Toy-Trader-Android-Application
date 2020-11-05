@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -61,10 +63,16 @@ public class LoginActivity extends AppCompatActivity implements FirebaseListener
 
     private Boolean checkValidations() {
         if(email.getText().toString().isEmpty()) {
-            SnackbarHelper.showMessage("Please Enter Email", getCurrentFocus());
+            SnackbarHelper.showMessage("Please Enter Email", this.findViewById(android.R.id.content));
             return false;
         }else if(password.getText().toString().isEmpty()) {
-            SnackbarHelper.showMessage("Please Enter Password", getCurrentFocus());
+            SnackbarHelper.showMessage("Please Enter Password", this.findViewById(android.R.id.content));
+            return false;
+        }else if (!Utilities.isValidEmail(email.getText())){
+            SnackbarHelper.showMessage("Please Enter a valid Email", this.findViewById(android.R.id.content));
+            return false;
+        }else if (!Utilities.isValidPassword(password.getText())){
+            SnackbarHelper.showMessage("Please Enter a valid Password", this.findViewById(android.R.id.content));
             return false;
         }
         return true;
@@ -82,7 +90,6 @@ public class LoginActivity extends AppCompatActivity implements FirebaseListener
             }
         });
     }
-
 
     @Override
     public <T> void getFBData(T event) {

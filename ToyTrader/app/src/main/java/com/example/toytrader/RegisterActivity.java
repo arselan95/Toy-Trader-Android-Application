@@ -86,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity implements FirebaseListe
             @Override
             public void onClick(View view) {
                 if(checkValidations()) {
-                    spinner.setVisibility(View.GONE);
+                    spinner.setVisibility(View.VISIBLE);
                     FirebaseHelper.getInstance().signupWith(email.getText().toString(),
                                                             password.getText().toString(), data, la);
                 }
@@ -97,9 +97,17 @@ public class RegisterActivity extends AppCompatActivity implements FirebaseListe
     private Boolean checkValidations() {
         for(EditText e : aed) {
             if(e.getText().toString().isEmpty()) {
-                SnackbarHelper.showMessage("Please enter all the details", getCurrentFocus());
+                SnackbarHelper.showMessage("Please enter all the details", this.findViewById(android.R.id.content));
                 return false;
             }
+        }
+
+        if (!Utilities.isValidEmail(email.getText())){
+            SnackbarHelper.showMessage("Please Enter a valid Email", this.findViewById(android.R.id.content));
+            return false;
+        }else if (!Utilities.isValidPassword(password.getText())){
+            SnackbarHelper.showMessage("Please Enter a valid Password", this.findViewById(android.R.id.content));
+            return false;
         }
 
         data = new HashMap<String, Object>();
