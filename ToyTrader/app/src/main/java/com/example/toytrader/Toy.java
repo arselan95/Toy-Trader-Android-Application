@@ -1,42 +1,73 @@
 package com.example.toytrader;
 
-import java.sql.Date;
-import java.sql.Time;
-
 public class Toy {
 
-//    public int id;
-//    public String name;
-//    public String tags;
-//    public String description;
-//    public String cost;
-//    public String image;
-//    public Time time;
-//    public Date date;
-//    public String location;
-//    public String userID;
-//    public String username;
-
-    public int getImageResource() {
-        return imageResource;
+    public Toy(String name, String description, Double cost, String image, String location, String userID) {
+        this.name = name;
+        this.description = description;
+        this.cost = cost;
+        this.image = image;
+        this.location = location;
+        this.userID = userID;
     }
 
-    public String getToyName() {
-        return toyName;
+    public String getName() {
+        return name;
     }
 
-    public String getToyDescription() {
-        return toyDescription;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    private int imageResource;
-    private String toyName;
-    private String toyDescription;
+    public String getDescription() {
+        return description;
+    }
 
-    public Toy(int imageResource, String toyName, String toyDescription){
-        this.imageResource = imageResource;
-        this.toyName = toyName;
-        this.toyDescription = toyDescription;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Double getCost() {
+        return cost;
+    }
+
+    public void setCost(Double cost) {
+        this.cost = cost;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    private String name;
+    private String description;
+    private Double cost;
+    private String image;
+    private String location;
+    private String userID;
+
+    public Toy(){
+
     }
 
 }

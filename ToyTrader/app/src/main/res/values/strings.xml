@@ -15,6 +15,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_toy_view">ToyView</string>
+    <string name="no_data_available">Toys For this Category will be added soon! Stay Tuned!</string>
+
     <!--
     This string is used for square devices and overridden by hello_world in
     values-round/strings.xml for round devices.

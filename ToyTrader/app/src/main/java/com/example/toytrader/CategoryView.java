@@ -22,17 +22,19 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
-public class CategoryView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class CategoryView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FirebaseListener {
 
 
     private DrawerLayout drawer;
-//    ArrayList<String> toys;
-    RecyclerView recyclerView;
-    RecyclerView.LayoutManager layoutManager;
-    RecyclerView.Adapter adapter;
-    private TextView myaboutbutton;
 
-    String thiscategory="";
+    private ArrayList<Toy> toys;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private RecyclerView.Adapter adapter;
+    private TextView myaboutbutton;
+    private TextView emptyView;
+    String thiscategory = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +44,7 @@ public class CategoryView extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView =  findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -52,72 +54,32 @@ public class CategoryView extends AppCompatActivity implements NavigationView.On
         Intent i = getIntent();
         thiscategory = i.getStringExtra("toy");
         System.out.println(thiscategory);
-        ArrayList<Toy> toys = new ArrayList<>();
-
-
-
         recyclerView=(RecyclerView) findViewById(R.id.recycler_view);
 
         /*
         GET DATABASE VALUES HERE OF THAT PARTICULAR CATEGORY
          */
+        toys = new ArrayList<Toy>();
 
-        //testing values
-        if(thiscategory.equals("vehicle")) {
-//            toys = new ArrayList<String>();
-//            toys.add("Toy vehicle 1");
-//            toys.add("Toy vehicle 2");
-//            toys.add("Toy vehicle 3");
-//            toys.add("Toy vehicle 4");
-//            toys.add("Toy vehicle 5");
-//            toys.add("Toy vehicle 6");
-        }
-
-        else if(thiscategory.equals("softtoy")) {
-            toys.add(new Toy(R.drawable.b3, "Toy 1", "Soft teddy of 2 years old"));
-            toys.add(new Toy(R.drawable.b3, "Toy 2", "Soft teddy of 2 years old"));
-//            toys = new ArrayList<String>();
-//            toys.add("Toy soft toy 1");
-//            toys.add("Toy soft toy 2");
-        }
-
-        else if(thiscategory.equals("partytoy")) {
-            toys.add(new Toy(R.drawable.b3, "Toy 1", "Soft teddy of 2 years old"));
-            toys.add(new Toy(R.drawable.b3, "Toy 2", "Soft teddy of 2 years old"));
-//            toys = new ArrayList<String>();
-//            toys.add("Toy party toy 1");
-//            toys.add("Toy party toy 2");
-        }
-
-       else  if(thiscategory.equals("dolls")) {
-//            toys = new ArrayList<String>();
-//            toys.add("Toy doll 1");
-//            toys.add("Toy doll 2");
-        }
-
-       else if(thiscategory.equals("electronics")) {
-//            toys = new ArrayList<String>();
-//            toys.add("Toy electronic 1");
-//            toys.add("Toy electronic 2");
-        }
-
-        layoutManager=new LinearLayoutManager(this);
-        adapter=new ToysAdapter(toys);
+        layoutManager = new LinearLayoutManager(this);
+        adapter = new ToysAdapter(toys);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-
+        emptyView = findViewById(R.id.empty_view);
+        FirebaseHelper.getInstance().getToysForCategory(thiscategory, this);
     }
+
 
     @Override
     public void onBackPressed() {
-        if(drawer.isDrawerOpen(GravityCompat.START)){
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else
             super.onBackPressed();
     }
 
     @Override
-    public boolean onOptionsItemSelected( MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
     }
 
@@ -130,7 +92,7 @@ public class CategoryView extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()){
+        switch (menuItem.getItemId()) {
             case R.id.add_toys:
                 Intent intent;
                 intent = new Intent(this, UploadToy.class);
@@ -162,8 +124,8 @@ public class CategoryView extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public void aboutToy(View v)
 
+    public void aboutToy(View v)
     {
         myaboutbutton =(TextView) v.findViewById(R.id.aboutText);
         myaboutbutton.setOnClickListener(new View.OnClickListener() {
@@ -173,6 +135,27 @@ public class CategoryView extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
             }
         });
+
+    }
+
+    @Override
+    public <T> void getFBData(T event) {
+        if(event instanceof ArrayList){
+            toys.addAll((ArrayList<Toy>) event);
+            adapter.notifyDataSetChanged();
+            if (toys.isEmpty()) {
+                recyclerView.setVisibility(View.GONE);
+                emptyView.setVisibility(View.VISIBLE);
+            }
+            else {
+                recyclerView.setVisibility(View.VISIBLE);
+                emptyView.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    @Override
+    public <T> void updateFBResult(T event) {
 
     }
 }
