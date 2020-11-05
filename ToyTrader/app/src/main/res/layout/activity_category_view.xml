@@ -22,11 +22,14 @@
             android:id="@+id/toycategory_fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <ScrollView
+            <TextView
+                android:id="@+id/empty_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/background">
+                android:background="@color/background"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="@string/no_data_available" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view"
@@ -34,9 +37,6 @@
                     android:layout_height="wrap_content"
                     android:padding="4dp"
                     android:scrollbars="vertical" />
-
-            </ScrollView>
-
         </FrameLayout>
     </LinearLayout>
     <com.google.android.material.navigation.NavigationView

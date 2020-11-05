@@ -22,17 +22,17 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
-public class CategoryView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class CategoryView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FirebaseListener {
 
 
     private DrawerLayout drawer;
 
-    private ArrayList<String> toys;
+    private ArrayList<Toy> toys;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
-    private Button myaboutbutton;
-
+    private TextView myaboutbutton;
+    private TextView emptyView;
     String thiscategory = "";
 
     @Override
@@ -59,14 +59,16 @@ public class CategoryView extends AppCompatActivity implements NavigationView.On
         /*
         GET DATABASE VALUES HERE OF THAT PARTICULAR CATEGORY
          */
-        toys = new ArrayList<String>();
+        toys = new ArrayList<Toy>();
 
         layoutManager = new LinearLayoutManager(this);
-        adapter = new MainAdapter(toys);
+        adapter = new ToysAdapter(toys);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-
+        emptyView = findViewById(R.id.empty_view);
+        FirebaseHelper.getInstance().getToysForCategory(thiscategory, this);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -125,7 +127,7 @@ public class CategoryView extends AppCompatActivity implements NavigationView.On
 
     public void aboutToy(View v)
     {
-        myaboutbutton =(Button) v.findViewById(R.id.aboutbutton);
+        myaboutbutton =(TextView) v.findViewById(R.id.aboutText);
         myaboutbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,6 +135,27 @@ public class CategoryView extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
             }
         });
+
+    }
+
+    @Override
+    public <T> void getFBData(T event) {
+        if(event instanceof ArrayList){
+            toys.addAll((ArrayList<Toy>) event);
+            adapter.notifyDataSetChanged();
+            if (toys.isEmpty()) {
+                recyclerView.setVisibility(View.GONE);
+                emptyView.setVisibility(View.VISIBLE);
+            }
+            else {
+                recyclerView.setVisibility(View.VISIBLE);
+                emptyView.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    @Override
+    public <T> void updateFBResult(T event) {
 
     }
 }

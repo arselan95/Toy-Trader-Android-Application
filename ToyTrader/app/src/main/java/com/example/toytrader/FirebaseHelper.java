@@ -10,7 +10,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -23,6 +25,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -155,7 +159,7 @@ public class FirebaseHelper {
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        if(taskSnapshot.getTask().isSuccessful()){
+                        if (taskSnapshot.getTask().isSuccessful()) {
                             ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri downloadPhotoUrl) {
@@ -166,9 +170,9 @@ public class FirebaseHelper {
                                     toysRef.document(toyUID).update(m).addOnCompleteListener(new OnCompleteListener() {
                                         @Override
                                         public void onComplete(@NonNull Task task) {
-                                            if(task.isSuccessful()) {
+                                            if (task.isSuccessful()) {
                                                 fbl.getFBData(task.isSuccessful());
-                                            }else {
+                                            } else {
                                                 fbl.getFBData("Upload image failed");
                                             }
                                         }
@@ -180,7 +184,7 @@ public class FirebaseHelper {
                                     });
                                 }
                             });
-                        }else {
+                        } else {
                             fbl.getFBData("Upload image failed");
                         }
                     }
@@ -224,7 +228,9 @@ public class FirebaseHelper {
         });
     }
 
-    public void getToysForCategory(String category) {
+    public void getToysForCategory(String category, final FirebaseListener fbl) {
+        this.fbl = fbl;
+        final ArrayList<Toy> toyList = new ArrayList<>();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference toysRef = db.collection("toys");
         toysRef.whereEqualTo("category", category).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -233,9 +239,13 @@ public class FirebaseHelper {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Map<String, Object> json = document.getData();
-
-                        Log.d(TAG, document.getId() + " => " + document.getData());
+                        Toy t = new Toy((String) json.get("name"), (String) json.get("description"),
+                                (Double) json.get("cost"), (String) json.get("image"),
+                                (String) json.get("location"), (String) json.get("userID"));
+//                        Log.d(TAG, document.getId() + " => " + document.getData());
+                        toyList.add(t);
                     }
+                    fbl.getFBData(toyList);
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
                 }
@@ -283,6 +293,33 @@ public class FirebaseHelper {
             @Override
             public void onFailure(@NonNull Exception e) {
                 fbl.updateFBResult(false);
+            }
+        });
+    }
+
+    public void changeUserPassword(String oldPass, final String newPass, final FirebaseListener fbl) {
+        this.fbl = fbl;
+        user = getFirebaseUser();
+        final String email = user.getEmail();
+        AuthCredential credential = EmailAuthProvider.getCredential(email, oldPass);
+
+        user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    user.updatePassword(newPass).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                fbl.getFBData(true);
+                            }else {
+                                fbl.getFBData(false);
+                            }
+                        }
+                    });
+                }else {
+                    fbl.getFBData(false);
+                }
             }
         });
     }

@@ -95,22 +95,23 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
 
     public void openVehicleCategory(View v) {
 
-        category = Constants.VEHICLE;
         softtoyButton = (Button) v.findViewById(R.id.vehicles17);
         softtoyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                category = Constants.VEHICLE;
                 openList();
             }
         });
     }
 
     public void openSoftToyCategory(View v) {
-        category = Constants.SOFT_TOYS;
+
         softtoyButton = (Button) v.findViewById(R.id.softtoy13);
         softtoyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                category = Constants.SOFT_TOYS;
                 openList();
             }
         });
@@ -118,11 +119,12 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
 
     public void openPartyCategory(View v) {
 
-        category = Constants.PARTY_TOYS;
+
         softtoyButton = (Button) v.findViewById(R.id.partytoys19);
         softtoyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                category = Constants.PARTY_TOYS;
                 openList();
             }
         });
@@ -130,23 +132,23 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
 
     public void openDollsCategory(View v) {
 
-        category = Constants.DOLLS;
+
         softtoyButton = (Button) v.findViewById(R.id.dolls14);
         softtoyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                category = Constants.DOLLS;
                 openList();
             }
         });
     }
 
     public void openElectronicsCategory(View v) {
-
-        category = Constants.ELECTRONICS;
         softtoyButton = (Button) v.findViewById(R.id.electronics15);
         softtoyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                category = Constants.ELECTRONICS;
                 openList();
             }
         });

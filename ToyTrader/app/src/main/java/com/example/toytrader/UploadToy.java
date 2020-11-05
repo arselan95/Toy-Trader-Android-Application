@@ -259,6 +259,7 @@ public class UploadToy extends AppCompatActivity implements AdapterView.OnItemSe
         toyData.put("location", location.getText().toString());
         toyData.put("name", name.getText().toString());
         toyData.put("userid", FirebaseHelper.getInstance().getFirebaseUser().getUid());
+        toyData.put("image", "");
         return true;
     }
 
@@ -284,7 +285,7 @@ public class UploadToy extends AppCompatActivity implements AdapterView.OnItemSe
 
     @Override
     public <T> void updateFBResult(T event) {
-        
+
     }
 }
 
