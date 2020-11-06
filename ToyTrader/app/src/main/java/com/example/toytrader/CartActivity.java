@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,16 +20,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
 public class CartActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
-    ArrayList<String> carttoys;
+    ArrayList<Toy> carttoys;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter;
+    SharedPreferences preferences;
+    int items;
+    Toy temp;
+    TextView emptyView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,26 +54,29 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         recyclerView=(RecyclerView) findViewById(R.id.cartrecycler_view);
+        emptyView = findViewById(R.id.cart_empty_view);
 
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
+        Gson gson = new Gson();
+            String json = preferences.getString("toy", "");
+            Toy t = gson.fromJson(json, Toy.class);
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String nam = preferences.getString("name", "");
-        String cat = preferences.getString("category", "");
-        String loc = preferences.getString("location", "");
+        carttoys=new ArrayList<Toy>();
 
-        System.out.println(nam);
-        System.out.println(cat);
-        System.out.println(loc);
+        if(preferences.getAll().size()==0)
+        {
+            recyclerView.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+        }
 
-        System.out.println(nam);
-        System.out.println(cat);
-        System.out.println(loc);
+        else {
+            carttoys.add(t);
+            carttoys.remove(temp);
+        }
 
-        carttoys=new ArrayList<String>();
-        carttoys.add(nam);
-        carttoys.add(cat);
-        carttoys.add(loc);
+        items= preferences.getAll().size();
+        System.out.println(carttoys.size());
 
         layoutManager=new LinearLayoutManager(this);
         adapter=new CartAdapter(carttoys);
@@ -124,5 +134,21 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void removeFromCart(View v)
+    {
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        /*
+        TODO: REMOVE TOY OBJECT
+         */
+        editor.remove("toy");
+        editor.apply();
+
+        Intent intent;
+        intent = new Intent(this, CartActivity.class);
+        startActivity(intent);
     }
 }
