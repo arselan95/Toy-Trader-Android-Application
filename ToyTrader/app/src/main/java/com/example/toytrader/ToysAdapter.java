@@ -1,5 +1,7 @@
 package com.example.toytrader;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -16,31 +18,45 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class ToysAdapter extends RecyclerView.Adapter<ToysAdapter.ToysViewHolder> {
+public class ToysAdapter extends RecyclerView.Adapter<ToysAdapter.ToysViewHolder>{
 
     private ArrayList<Toy> toys;
-    public static class ToysViewHolder extends RecyclerView.ViewHolder{
+    private Context context;
+    public static class ToysViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public ImageView imageView;
         public TextView toyName;
         public TextView toyDesc;
+        public Toy currentToy;
+        private Context context;
 
-        public ToysViewHolder(@NonNull View itemView) {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(".ToyView");
+            intent.putExtra("ToyID", currentToy.getToyID());
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        }
+
+        public ToysViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
+            itemView.setOnClickListener(this);
+            this.context = context;
             imageView = itemView.findViewById(R.id.toy_image);
             toyName = itemView.findViewById(R.id.category_toyname);
             toyDesc = itemView.findViewById(R.id.toy_desc_text);
         }
     }
 
-    public ToysAdapter(ArrayList<Toy> toys){
+    public ToysAdapter(ArrayList<Toy> toys, Context context){
         this.toys = toys;
+        this.context = context;
     }
 
     @NonNull
     @Override
     public ToysViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row, parent,false);
-        ToysViewHolder toysViewHolder = new ToysViewHolder(view);
+        ToysViewHolder toysViewHolder = new ToysViewHolder(view, context);
         return toysViewHolder;
     }
 
@@ -54,6 +70,7 @@ public class ToysAdapter extends RecyclerView.Adapter<ToysAdapter.ToysViewHolder
         }
         holder.toyName.setText(toy.getName());
         holder.toyDesc.setText(toy.getDescription());
+        holder.currentToy = toy;
     }
 
     @Override

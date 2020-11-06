@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class CartActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -59,27 +62,22 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         Gson gson = new Gson();
-            String json = preferences.getString("toy", "");
-            Toy t = gson.fromJson(json, Toy.class);
+            Set<String> sSet;
+        Set<String> sharedString = preferences.getStringSet("toys", new HashSet<String>());
 
-        carttoys=new ArrayList<Toy>();
+        carttoys= Utilities.getToys(sharedString);
 
-        if(preferences.getAll().size()==0)
+        if(sharedString.isEmpty())
         {
             recyclerView.setVisibility(View.GONE);
             emptyView.setVisibility(View.VISIBLE);
-        }
-
-        else {
-            carttoys.add(t);
-            carttoys.remove(temp);
         }
 
         items= preferences.getAll().size();
         System.out.println(carttoys.size());
 
         layoutManager=new LinearLayoutManager(this);
-        adapter=new CartAdapter(carttoys);
+        adapter=new CartAdapter(carttoys, getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
