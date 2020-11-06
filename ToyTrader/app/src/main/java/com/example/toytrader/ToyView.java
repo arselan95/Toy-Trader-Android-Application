@@ -21,6 +21,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
 
 public class ToyView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -60,12 +63,12 @@ public class ToyView extends AppCompatActivity implements NavigationView.OnNavig
          tislocation= (TextView)findViewById(R.id.locationtextview);
 
         /*
-        GET DATABASE VALUES HERE
+        TODO: GET DATABASE VALUES HERE and Assign them to these strings
          */
 
         String nam="toy name";
-        String cat=" vehicle ";
-        String cos=" 15$ ";
+        String cat="vehicle ";
+        String cos="15.00";
         String desc=" This all new fully rechargeable and powered fun Kidzone ride-on toy car " +
                 "can spin a full 360 degrees with its simple joystick or remote controls. This brilliant little car is built " +
                 "from a tough plastic shell and has a " +
@@ -142,21 +145,21 @@ public class ToyView extends AppCompatActivity implements NavigationView.OnNavig
         tiscost= (TextView)findViewById(R.id.costtextview);
         tislocation= (TextView)findViewById(R.id.locationtextview);
 
-        /*
-       TODO:  ADD to SHARED PREFERENCES / OR SOME LIST
+        double i= Double.parseDouble(tiscost.getText().toString());
 
-       UPDATE THE CART
-
-       REFRESH THIS PAGE
-         */
+        Toy t= new Toy(tisname.getText().toString(), i, tislocation.getText().toString());
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("name",tisname.getText().toString());
-        editor.putString("category",tiscategory.getText().toString());
-        editor.putString("description",tisdescription.getText().toString());
-        editor.putString("cost",tiscost.getText().toString());
-        editor.putString("location",tislocation.getText().toString());
+
+        Gson gson=new Gson();
+        String json=gson.toJson(t);
+
+        /*
+        TODO: PUT KEY VALUE AS (TOY ID OR NAME, OBJ)
+         */
+
+        editor.putString("toy", json);
         editor.apply();
 
 

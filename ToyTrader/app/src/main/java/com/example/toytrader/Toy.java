@@ -11,6 +11,13 @@ public class Toy {
         this.userID = userID;
     }
 
+    public Toy(String name, double cost, String location)
+    {
+        this.name=name;
+        this.cost=cost;
+        this.location=location;
+    }
+
     public String getName() {
         return name;
     }

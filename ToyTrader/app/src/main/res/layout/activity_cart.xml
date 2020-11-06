@@ -24,6 +24,14 @@
             android:layout_height="match_parent"
             android:background="@color/background">
 
+            <TextView
+                android:id="@+id/cart_empty_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/background"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="CART IS EMPTY" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cartrecycler_view"
