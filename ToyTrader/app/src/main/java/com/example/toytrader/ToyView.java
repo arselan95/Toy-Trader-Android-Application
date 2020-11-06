@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,8 +25,10 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
-public class ToyView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class ToyView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FirebaseListener {
 
 
     private DrawerLayout drawer;
@@ -34,11 +37,10 @@ public class ToyView extends AppCompatActivity implements NavigationView.OnNavig
     TextView tisdescription;
     TextView tiscost;
     TextView tislocation;
+    ImageView toyImage;
     private Button addcart;
-
-
-
-
+    private Toy selectedToy;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,34 +56,19 @@ public class ToyView extends AppCompatActivity implements NavigationView.OnNavig
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        Intent i = getIntent();
+        String toyID = i.getStringExtra("ToyID");
 
+        FirebaseHelper.getInstance().getToyForID(toyID, this);
 
          tisname= (TextView)findViewById(R.id.toyviewnametextview);
          tiscategory= (TextView)findViewById(R.id.categorytextview);
          tisdescription= (TextView)findViewById(R.id.descriptiontextview);
          tiscost= (TextView)findViewById(R.id.costtextview);
          tislocation= (TextView)findViewById(R.id.locationtextview);
-
-        /*
-        TODO: GET DATABASE VALUES HERE and Assign them to these strings
-         */
-
-        String nam="toy name";
-        String cat="vehicle ";
-        String cos="15.00";
-        String desc=" This all new fully rechargeable and powered fun Kidzone ride-on toy car " +
-                "can spin a full 360 degrees with its simple joystick or remote controls. This brilliant little car is built " +
-                "from a tough plastic shell and has a " +
-                "soft bumper outside system allowing you to bump around if you make the wrong turn. " +
-                "ASTM-certified to this bumper car and comprise a safety belt," +
-                " anti-flat tires and Light. Recommended for children aged one and a half and above.";
-        String loca="San Jose ";
-
-       tisname.setText(nam);
-       tiscategory.setText(cat);
-       tisdescription.setText( desc);
-       tiscost.setText(cos);
-       tislocation.setText(loca);
+        toyImage = findViewById(R.id.toy_view_image);
+        toyImage.setImageResource(R.drawable.softoys);
+        addToCart();
     }
 
     @Override
@@ -137,39 +124,63 @@ public class ToyView extends AppCompatActivity implements NavigationView.OnNavig
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    public void addToCart(View v)
+    public void addToCart()
     {
-        tisname= (TextView)findViewById(R.id.toyviewnametextview);
-        tiscategory= (TextView)findViewById(R.id.categorytextview);
-        tisdescription= (TextView)findViewById(R.id.descriptiontextview);
-        tiscost= (TextView)findViewById(R.id.costtextview);
-        tislocation= (TextView)findViewById(R.id.locationtextview);
+        final Context c = this;
 
-        double i= Double.parseDouble(tiscost.getText().toString());
-
-        Toy t= new Toy(tisname.getText().toString(), i, tislocation.getText().toString());
-
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = preferences.edit();
-
-        Gson gson=new Gson();
-        String json=gson.toJson(t);
-
-        /*
-        TODO: PUT KEY VALUE AS (TOY ID OR NAME, OBJ)
-         */
-
-        editor.putString("toy", json);
-        editor.apply();
-
-
-        addcart =(Button)v.findViewById(R.id.addtocartbutton);
+        addcart =findViewById(R.id.addtocartbutton);
         addcart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                double i= Double.parseDouble(tiscost.getText().toString());
+
+                Toy t= new Toy(selectedToy.getToyID(), tisname.getText().toString(), i, tislocation.getText().toString());
+
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(c);
+                SharedPreferences.Editor editor = preferences.edit();
+
+                Gson gson=new Gson();
+                String json=gson.toJson(t);
+                Set stringSet = preferences.getStringSet("toys", new HashSet<String>());
+                stringSet.add(json);
+                editor.putStringSet("toys", stringSet);
+                editor.apply();
                 Intent intent = new Intent(".UserHomeActivity");
                 startActivity(intent);
             }
         });
+    }
+
+    private void setToyData() {
+        String nam= selectedToy.getName();
+        String cat= Utilities.getCategory(selectedToy.getCategory());
+        String cos= selectedToy.getCost().toString();
+        String desc= selectedToy.getDescription();
+        String loca= selectedToy.getLocation();
+
+        tisname.setText(nam);
+        tiscategory.setText(cat);
+        tisdescription.setText( desc);
+        tiscost.setText(cos);
+        tislocation.setText(loca);
+
+        if(selectedToy.getImage() != null && !selectedToy.getImage().isEmpty()) {
+            new DownloadImageTask(toyImage).execute(selectedToy.getImage());
+        }else {
+            toyImage.setImageResource(R.drawable.softoys);
+        }
+    }
+
+    @Override
+    public <T> void getFBData(T event) {
+        if(event instanceof Toy) {
+            selectedToy = (Toy) event;
+            setToyData();
+        }
+    }
+
+    @Override
+    public <T> void updateFBResult(T event) {
+
     }
 }

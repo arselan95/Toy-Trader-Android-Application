@@ -239,16 +239,42 @@ public class FirebaseHelper {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Map<String, Object> json = document.getData();
-                        Toy t = new Toy((String) json.get("name"), (String) json.get("description"),
+                        Toy t = new Toy(document.getId(), (String) json.get("name"), (String) json.get("description"),
                                 (Double) json.get("cost"), (String) json.get("image"),
-                                (String) json.get("location"), (String) json.get("userID"));
-//                        Log.d(TAG, document.getId() + " => " + document.getData());
+                                (String) json.get("location"), (String) json.get("userID"), (String) json.get("category"));
+                        Log.d(TAG, document.getId() + " => " + document.getData());
                         toyList.add(t);
                     }
                     fbl.getFBData(toyList);
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
                 }
+            }
+        });
+    }
+
+    public void getToyForID(String id, final FirebaseListener fbl) {
+        this.fbl = fbl;
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference toysRef = db.collection("toys");
+        toysRef.document(id).get().addOnCompleteListener(new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot d = (DocumentSnapshot) task.getResult();
+                    Map json = d.getData();
+                    Toy t = new Toy(d.getId(), (String) json.get("name"), (String) json.get("description"),
+                            (Double) json.get("cost"), (String) json.get("image"),
+                            (String) json.get("location"), (String) json.get("userID"), (String) json.get("category"));
+                    fbl.getFBData(t);
+                } else {
+                    fbl.getFBData(null);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                fbl.getFBData(null);
             }
         });
     }

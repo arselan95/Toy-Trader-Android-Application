@@ -2,17 +2,20 @@ package com.example.toytrader;
 
 public class Toy {
 
-    public Toy(String name, String description, Double cost, String image, String location, String userID) {
+    public Toy(String id, String name, String description, Double cost, String image, String location, String userID, String category) {
         this.name = name;
         this.description = description;
         this.cost = cost;
         this.image = image;
         this.location = location;
         this.userID = userID;
+        this.toyID = id;
+        this.category = category;
     }
 
-    public Toy(String name, double cost, String location)
+    public Toy(String toyID, String name, double cost, String location)
     {
+        this.toyID = toyID;
         this.name=name;
         this.cost=cost;
         this.location=location;
@@ -66,12 +69,33 @@ public class Toy {
         this.userID = userID;
     }
 
+    public String getToyID() {
+        return toyID;
+    }
+
+    public void setToyID(String id) {
+        this.toyID = id;
+    }
+
+    private String toyID;
     private String name;
     private String description;
     private Double cost;
     private String image;
     private String location;
     private String userID;
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    private String category;
+
+
 
     public Toy(){
 

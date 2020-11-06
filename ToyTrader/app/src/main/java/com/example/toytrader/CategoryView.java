@@ -53,7 +53,7 @@ public class CategoryView extends AppCompatActivity implements NavigationView.On
 
         Intent i = getIntent();
         thiscategory = i.getStringExtra("toy");
-        System.out.println(thiscategory);
+
         recyclerView=(RecyclerView) findViewById(R.id.recycler_view);
 
         /*
@@ -62,7 +62,7 @@ public class CategoryView extends AppCompatActivity implements NavigationView.On
         toys = new ArrayList<Toy>();
 
         layoutManager = new LinearLayoutManager(this);
-        adapter = new ToysAdapter(toys);
+        adapter = new ToysAdapter(toys, getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         emptyView = findViewById(R.id.empty_view);
@@ -131,8 +131,7 @@ public class CategoryView extends AppCompatActivity implements NavigationView.On
         myaboutbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(".ToyView");
-                startActivity(intent);
+
             }
         });
 
@@ -158,4 +157,6 @@ public class CategoryView extends AppCompatActivity implements NavigationView.On
     public <T> void updateFBResult(T event) {
 
     }
+
+    
 }
