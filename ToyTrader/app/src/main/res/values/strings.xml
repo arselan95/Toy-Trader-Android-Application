@@ -23,4 +23,5 @@
     -->
     <string name="hello_world">Hello Square World!</string>
     <string name="title_activity_cart">CartActivity</string>
+    <string name="title_activity_toy_location">Map</string>
 </resources>

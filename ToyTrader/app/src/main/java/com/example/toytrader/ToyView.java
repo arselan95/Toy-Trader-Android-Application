@@ -39,6 +39,7 @@ public class ToyView extends AppCompatActivity implements NavigationView.OnNavig
     TextView tislocation;
     ImageView toyImage;
     private Button addcart;
+    private Button gettoylocation;
     private Toy selectedToy;
     
     @Override
@@ -69,6 +70,7 @@ public class ToyView extends AppCompatActivity implements NavigationView.OnNavig
         toyImage = findViewById(R.id.toy_view_image);
         toyImage.setImageResource(R.drawable.softoys);
         addToCart();
+        locateToy();
     }
 
     @Override
@@ -147,6 +149,19 @@ public class ToyView extends AppCompatActivity implements NavigationView.OnNavig
                 editor.apply();
                 Intent intent = new Intent(".UserHomeActivity");
                 startActivity(intent);
+            }
+        });
+    }
+
+    public void locateToy()
+    {
+        gettoylocation =findViewById(R.id.locationbutton);
+
+        gettoylocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(".ToyLocation");
+                startActivity(i);
             }
         });
     }
