@@ -12,43 +12,37 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.Calendar;
 
-public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
-
+public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     ArrayList<Toy> s;
     private Context context;
-    //String n,p,l;
-    public CartAdapter(ArrayList<Toy> temp, Context context)
-    {
-        s=temp;
-        this.context =context;
+
+    public CartAdapter(ArrayList<Toy> temp, Context context) {
+        s = temp;
+        this.context = context;
     }
 
 
-
     @Override
-    public CartAdapter.ViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cartrow,parent,false);
+    public CartAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cartrow, parent, false);
         return new ViewHolder(view, context);
     }
 
     @Override
-    public void onBindViewHolder( CartAdapter.ViewHolder holder, int position) {
-       // holder.name.setText(s.get(position));
-        //holder.price.setText(s.get(position));
-        //holder.location.setText(s.get(position));
+    public void onBindViewHolder(CartAdapter.ViewHolder holder, int position) {
         Toy toy = s.get(position);
         holder.t = toy;
         holder.name.setText(toy.getName());
         holder.price.setText(toy.getCost().toString());
         holder.location.setText(toy.getLocation());
-
     }
 
     @Override
@@ -56,47 +50,36 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
         return s.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
-    {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, FirebaseListener {
 
         public TextView name;
         public TextView price;
         public TextView location;
         public Button removeButton;
+        public Button checkoutButton;
         public Context context;
         public Toy t;
 
-        public ViewHolder(View itemView, Context context)
-        {
+        public ViewHolder(View itemView, Context context) {
             super(itemView);
-            name= itemView.findViewById(R.id.cart_toyname);
-            price=itemView.findViewById(R.id.cart_toyprice);
-            location=itemView.findViewById(R.id.cart_toylocation);
-            removeButton=itemView.findViewById(R.id.aboutbutton);
+            name = itemView.findViewById(R.id.cart_toyname);
+            price = itemView.findViewById(R.id.cart_toyprice);
+            location = itemView.findViewById(R.id.cart_toylocation);
+            removeButton = itemView.findViewById(R.id.aboutbutton);
+            checkoutButton = itemView.findViewById(R.id.cart_checkout);
             this.context = context;
             final Context c = context;
             removeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(c);
-                    SharedPreferences.Editor editor = preferences.edit();
+                    removeButtonAction();
+                }
+            });
 
-                    Set stringSet = preferences.getStringSet("toys", new HashSet<String>());
-
-                    Gson gson=new Gson();
-
-                    stringSet = Utilities.getToysWithout(stringSet, t.getToyID());
-
-                    editor.putStringSet("toys", stringSet);
-                    editor.apply();
-
-
-                    editor.apply();
-
-                    Intent intent;
-                    intent = new Intent(c, CartActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    c.startActivity(intent);
+            checkoutButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    checkoutButtonAction();
                 }
             });
         }
@@ -105,6 +88,48 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
         public void onClick(View view) {
 
         }
+
+        public void removeButtonAction(){
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.context);
+            SharedPreferences.Editor editor = preferences.edit();
+            Set stringSet = preferences.getStringSet("toys", new HashSet<String>());
+            stringSet = Utilities.getToysWithout(stringSet, t.getToyID());
+            editor.putStringSet("toys", stringSet);
+            editor.apply();
+            editor.commit();
+            Intent intent;
+            intent = new Intent(this.context, CartActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            this.context.startActivity(intent);
+        }
+
+        public void checkoutButtonAction(){
+            Map m = new HashMap();
+            FirebaseHelper f = FirebaseHelper.getInstance();
+
+            m.put("userid", f.getFirebaseUser().getUid());
+            m.put("type_of_sale", "Buy");
+            m.put("toyid", t.getToyID());
+            m.put("start_date", Calendar.getInstance().getTime().toString());
+            m.put("ownerid", t.getUserID());
+            m.put("cost", t.getCost());
+            f.tradeToyWithDetails(m, this);
+        }
+
+        @Override
+        public <T> void getFBData(T event) {
+            if(event instanceof Boolean) {
+                //Move to My orders screen
+            }else if(event instanceof Exception) {
+                SnackbarHelper.showMessage(((Error)event).getLocalizedMessage(), this.itemView);
+            }
+        }
+
+        @Override
+        public <T> void updateFBResult(T event) {
+
+        }
     }
+
 
 }

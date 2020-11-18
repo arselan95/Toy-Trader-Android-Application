@@ -22,7 +22,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/cart_toyname"
+                android:id="@+id/orders_toyname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="hello"
@@ -30,7 +30,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/cart_toyprice"
+                android:id="@+id/orders_toyprice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="price"
@@ -38,7 +38,7 @@
                 android:textStyle="italic" />
 
             <TextView
-                android:id="@+id/cart_toylocation"
+                android:id="@+id/orders_toylocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="hello"
@@ -49,7 +49,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/cart_checkout"
+            android:id="@+id/orders_return"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|left"
@@ -57,18 +57,18 @@
             android:gravity="center"
             android:padding="9dp"
             android:layout_marginRight="8dp"
-            android:text="Checkout"
+            android:text="Return"
             android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/aboutbutton"
+            android:id="@+id/orders_report"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|left"
             android:background="@color/colorPrimary"
             android:gravity="center"
             android:padding="9dp"
-            android:text="Remove"
+            android:text="Report"
             android:textColor="@android:color/white" />
     </LinearLayout>
 
