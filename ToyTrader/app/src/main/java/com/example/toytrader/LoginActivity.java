@@ -28,6 +28,7 @@ public class LoginActivity extends AppCompatActivity implements FirebaseListener
         setupAllViews();
         setupTextWatchers();
         setupOnClickListeners();
+        onClickAdminLogin();
     }
 
     private void setupAllViews() {
@@ -96,7 +97,8 @@ public class LoginActivity extends AppCompatActivity implements FirebaseListener
         adminLoginText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent()
+                Intent intent = new Intent(".AdminLoginActivity");
+                startActivity((intent));
             }
         });
     }
