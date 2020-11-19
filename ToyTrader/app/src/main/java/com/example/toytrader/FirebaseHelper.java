@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.toytrader.admin.IssueModel;
 import com.example.toytrader.admin.ToyModel;
 import com.example.toytrader.admin.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -272,6 +273,26 @@ public class FirebaseHelper {
         });
     }
 
+    public void getAllIssues(final  FirebaseListener fbl){
+        this.fbl = fbl;
+        final ArrayList<IssueModel> issueModels = new ArrayList<>();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference userRef = db.collection("toyFrauds");
+        userRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot documentSnapshot: task.getResult()){
+                        Map<String, Object> json = documentSnapshot.getData();
+                        IssueModel issueModel = new IssueModel((String)json.get("toyname"), (String)json.get("reason"), documentSnapshot.getId());
+                        issueModels.add(issueModel);
+                    }
+                    fbl.getFBData(issueModels);
+                }
+            }
+        });
+    }
+
     public void getToysForCategory(String category, final FirebaseListener fbl) {
         this.fbl = fbl;
         final ArrayList<Toy> toyList = new ArrayList<>();
@@ -318,6 +339,51 @@ public class FirebaseHelper {
         });
     }
 
+    public void getIssue(String id, final FirebaseListener fbl) {
+        this.fbl = fbl;
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference toysRef = db.collection("toyFrauds");
+        final HashMap<String, Object> issueDetails = new HashMap<>();
+        toysRef.document(id).get().addOnCompleteListener(new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot d = (DocumentSnapshot) task.getResult();
+                    Map<String, Object> json = d.getData();
+                    for (Map.Entry<String, Object> entry : json.entrySet()) {
+                        String key = entry.getKey();
+                        Object value = entry.getValue();
+                        issueDetails.put(key, value);
+                    }
+                    if( issueDetails.containsKey("reporterid")){
+                        String userId = issueDetails.get("reporterid").toString();
+                        CollectionReference userRef = db.collection("users");
+                        userRef.document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task1) {
+                                if(task1.isSuccessful()) {
+                                    DocumentSnapshot documentSnapshot = (DocumentSnapshot) task1.getResult();
+                                    Map<String, Object> userData = documentSnapshot.getData();
+                                    issueDetails.put("user_name", userData.get("first_name").toString()
+                                            + " " + userData.get("last_name").toString());
+                                }
+                                fbl.getFBData(issueDetails);
+                            }
+                        });
+
+                    }
+
+                } else {
+                    fbl.getFBData(null);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                fbl.getFBData(null);
+            }
+        });
+    }
     public void getUser(String id, final FirebaseListener fbl){
         this.fbl = fbl;
         FirebaseFirestore db = FirebaseFirestore.getInstance();
