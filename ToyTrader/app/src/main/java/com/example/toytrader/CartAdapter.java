@@ -41,8 +41,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         Toy toy = s.get(position);
         holder.t = toy;
         holder.name.setText(toy.getName());
-        holder.price.setText(toy.getCost().toString());
+        holder.price.setText("Cost :"+toy.getCost().toString());
         holder.location.setText(toy.getLocation());
+        Double rentalValue = (toy.getCost() * 0.65);
+        holder.rent.setText("On Rent: "+rentalValue.toString() + "/Day");
     }
 
     @Override
@@ -55,8 +57,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         public TextView name;
         public TextView price;
         public TextView location;
+        public TextView rent;
         public Button removeButton;
-        public Button checkoutButton;
+        public Button buyButton;
+        public Button rentButton;
         public Context context;
         public Toy t;
 
@@ -64,9 +68,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             super(itemView);
             name = itemView.findViewById(R.id.cart_toyname);
             price = itemView.findViewById(R.id.cart_toyprice);
+            rent = itemView.findViewById(R.id.cart_toy_rental_price);
             location = itemView.findViewById(R.id.cart_toylocation);
             removeButton = itemView.findViewById(R.id.aboutbutton);
-            checkoutButton = itemView.findViewById(R.id.cart_checkout);
+            buyButton = itemView.findViewById(R.id.cart_checkout);
+            rentButton = itemView.findViewById(R.id.cart_rent);
             this.context = context;
             final Context c = context;
             removeButton.setOnClickListener(new View.OnClickListener() {
@@ -76,10 +82,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 }
             });
 
-            checkoutButton.setOnClickListener(new View.OnClickListener() {
+            buyButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    checkoutButtonAction();
+                    checkoutButtonAction("Buy");
+                }
+            });
+
+            rentButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    checkoutButtonAction("Rent");
                 }
             });
         }
@@ -103,25 +116,29 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             this.context.startActivity(intent);
         }
 
-        public void checkoutButtonAction(){
+        public void checkoutButtonAction(String saleType){
             Map m = new HashMap();
             FirebaseHelper f = FirebaseHelper.getInstance();
 
             m.put("userid", f.getFirebaseUser().getUid());
-            m.put("type_of_sale", "Buy");
+            m.put("type_of_sale", saleType);
             m.put("toyid", t.getToyID());
             m.put("start_date", Calendar.getInstance().getTime().toString());
             m.put("ownerid", t.getUserID());
             m.put("cost", t.getCost());
+            m.put("toyname", t.getName());
+            m.put("end_date", "");
             f.tradeToyWithDetails(m, this);
         }
 
         @Override
         public <T> void getFBData(T event) {
             if(event instanceof Boolean) {
-                //Move to My orders screen
+                Intent intent = new Intent(this.context, MyOrders.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                this.context.startActivity(intent);
             }else if(event instanceof Exception) {
-                SnackbarHelper.showMessage(((Error)event).getLocalizedMessage(), this.itemView);
+                SnackbarHelper.showMessage(((Exception)event).getLocalizedMessage(), this.itemView);
             }
         }
 

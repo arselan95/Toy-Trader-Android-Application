@@ -62,7 +62,7 @@ public class Utilities {
         return t;
     }
 
-    public static Order generateOrderFromJSON(Map m, String toyID){
+    public static Order generateOrderFromJSON(Map m, String orderID){
         Order o = new Order();
         o.cost = (Double)m.get("cost");
         o.ownerID =  (String) m.get("ownerid");
@@ -70,6 +70,8 @@ public class Utilities {
         o.userID = (String) m.get("userid");
         o.saleType = (String) m.get("type_of_sale");
         o.toyName = (String) m.get("toyname");
+        o.endDate = (String) m.get("end_date");
+        o.orderID = orderID;
         return o;
     }
 

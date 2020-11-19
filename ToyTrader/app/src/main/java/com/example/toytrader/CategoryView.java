@@ -92,36 +92,7 @@ public class CategoryView extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.add_toys:
-                Intent intent;
-                intent = new Intent(this, UploadToy.class);
-                startActivity(intent);
-                break;
-            case R.id.nav_profile:
-                Intent intent2 = new Intent(this, ProfileActivity.class);
-                startActivity(intent2);
-                break;
-
-            case R.id.nav_cart:
-                intent = new Intent(this, CartActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.home:
-                Intent home = new Intent(this, UserHomeActivity.class);
-                startActivity(home);
-                break;
-
-            case R.id.nav_logout:
-                FirebaseHelper.getInstance().cleanUpForLogout();
-                intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                this.finish();
-                break;
-
-        }
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+        return Utilities.handleNavigationDrawerClick(menuItem, this, drawer);
     }
 
 

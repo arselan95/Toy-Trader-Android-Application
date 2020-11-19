@@ -1,6 +1,8 @@
 package com.example.toytrader;
 
 public class Order {
+
+    String orderID ;
     String endDate ;
     String userID ;
     Double cost;

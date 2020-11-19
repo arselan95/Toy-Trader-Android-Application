@@ -22,11 +22,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link OrdersRow#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class OrdersRow extends Fragment {
 
     public OrdersRow() {
@@ -73,10 +68,17 @@ class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(OrdersAdapter.ViewHolder holder, int position) {
         Order order = s.get(position);
-        holder.t = order;
+        holder.o = order;
         holder.name.setText(order.toyName);
         holder.price.setText(order.cost.toString());
         holder.typeOfSale.setText(order.saleType);
+        if(order != null && !order.endDate.isEmpty()) {
+            holder.returnButton.setText("Returned");
+            holder.returnButton.setEnabled(false);
+        }else {
+            holder.returnButton.setText("Return");
+            holder.returnButton.setEnabled(true);
+        }
     }
 
     @Override
@@ -90,9 +92,8 @@ class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder> {
         public TextView price;
         public TextView typeOfSale;
         public Button returnButton;
-        public Button reportButton;
         public Context context;
-        public Order t;
+        public Order o;
 
         public ViewHolder(View itemView, Context context) {
             super(itemView);
@@ -100,20 +101,13 @@ class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder> {
             price = itemView.findViewById(R.id.orders_toyprice);
             typeOfSale = itemView.findViewById(R.id.orders_toylocation);
             returnButton = itemView.findViewById(R.id.orders_return);
-            reportButton = itemView.findViewById(R.id.orders_report);
+
             this.context = context;
             final Context c = context;
             returnButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                }
-            });
-
-            reportButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
+                    returnButtonAction();
                 }
             });
         }
@@ -123,29 +117,21 @@ class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder> {
 
         }
 
-        public void removeButtonAction(){
-
-        }
-
-        public void checkoutButtonAction(){
+        public void returnButtonAction(){
             Map m = new HashMap();
             FirebaseHelper f = FirebaseHelper.getInstance();
-
-//            m.put("userid", f.getFirebaseUser().getUid());
-//            m.put("type_of_sale", "Buy");
-//            m.put("toyid", t.getToyID());
-//            m.put("start_date", Calendar.getInstance().getTime().toString());
-//            m.put("ownerid", t.getUserID());
-//            m.put("cost", t.getCost());
-//            f.tradeToyWithDetails(m, this);
+            m.put("end_date", Calendar.getInstance().getTime().toString());
+            f.returnToyWithID(o.orderID, m, this);
         }
 
         @Override
         public <T> void getFBData(T event) {
             if(event instanceof Boolean) {
-                //Move to My orders screen
+                Intent intent = new Intent(this.context, UserHomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                this.context.startActivity(intent);
             }else if(event instanceof Exception) {
-                SnackbarHelper.showMessage(((Error)event).getLocalizedMessage(), this.itemView);
+                SnackbarHelper.showMessage(((Exception)event).getLocalizedMessage(), this.itemView);
             }
         }
 
@@ -154,6 +140,4 @@ class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder> {
 
         }
     }
-
-
 }

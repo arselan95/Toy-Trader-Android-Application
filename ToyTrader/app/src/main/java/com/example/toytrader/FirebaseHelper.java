@@ -362,6 +362,46 @@ public class FirebaseHelper {
                 });
     }
 
+    public void returnToyWithID(String transactionID, Map toyUpdates, final FirebaseListener fbl) {
+        this.fbl = fbl;
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference tradesRef = db.collection("trades");
+        tradesRef.document(transactionID).update(toyUpdates).addOnSuccessListener(new OnSuccessListener() {
+            @Override
+            public void onSuccess(Object o) {
+                fbl.getFBData(true);
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                        fbl.getFBData(e);
+                    }
+                });
+
+    }
+
+    public void reportToy(Map report, final FirebaseListener fbl) {
+        this.fbl = fbl;
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference fraudsRef = db.collection("toyFrauds");
+        fraudsRef.add(report).addOnSuccessListener(new OnSuccessListener() {
+            @Override
+            public void onSuccess(Object o) {
+                fbl.getFBData(true);
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                        fbl.getFBData(e);
+                    }
+                });
+
+    }
+
     public void getMyOrders(final FirebaseListener fbl) {
         this.fbl = fbl;
         final ArrayList<Order> orderList = new ArrayList<>();

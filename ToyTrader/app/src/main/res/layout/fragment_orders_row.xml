@@ -59,17 +59,6 @@
             android:layout_marginRight="8dp"
             android:text="Return"
             android:textColor="@android:color/white" />
-
-        <Button
-            android:id="@+id/orders_report"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:padding="9dp"
-            android:text="Report"
-            android:textColor="@android:color/white" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

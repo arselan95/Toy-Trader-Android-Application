@@ -29,6 +29,7 @@ public class EditProfileFragment extends Fragment implements FirebaseListener {
     public EditProfileFragment() {
         // Required empty public constructor
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class EditProfileFragment extends Fragment implements FirebaseListener {
         final EditProfileFragment fragment = this;
         FirebaseHelper.getInstance().getDetailsForCurrentUser(fragment);
 
-        saveButton = (Button)view.findViewById(R.id.save_btn);
+        saveButton = (Button) view.findViewById(R.id.save_btn);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,18 +53,18 @@ public class EditProfileFragment extends Fragment implements FirebaseListener {
             }
         });
 
-        cancelButton = (Button)view.findViewById(R.id.cancel_btn);
+        cancelButton = (Button) view.findViewById(R.id.cancel_btn);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage("Unasaved Changes will be lost. Are you sure to cancel?")
+                builder.setMessage("Unsaved Changes will be lost. Are you sure to cancel?")
                         .setTitle("Discard Changes")
                         .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 getActivity().getSupportFragmentManager().beginTransaction().
-                                        replace(R.id.profile_fragment,new ViewProfileFragment()).commit();
+                                        replace(R.id.profile_fragment, new ViewProfileFragment()).commit();
                             }
                         })
                         .setNegativeButton("NO", null);
@@ -76,8 +77,8 @@ public class EditProfileFragment extends Fragment implements FirebaseListener {
 
     @Override
     public <T> void getFBData(T event) {
-        if (event != null){
-            Map m = (Map)event;
+        if (event != null) {
+            Map m = (Map) event;
             initialiseFields();
             firstName.setText(m.get("first_name").toString());
             lastName.setText(m.get("last_name").toString());
@@ -91,9 +92,9 @@ public class EditProfileFragment extends Fragment implements FirebaseListener {
     @Override
     public <T> void updateFBResult(T event) {
         Boolean res = (Boolean) event;
-        if(res){
+        if (res) {
             getActivity().getSupportFragmentManager().beginTransaction().
-                    replace(R.id.profile_fragment,new ViewProfileFragment()).commit();
+                    replace(R.id.profile_fragment, new ViewProfileFragment()).commit();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage("Unable to save your changes. Please try sometime later.")
@@ -102,7 +103,7 @@ public class EditProfileFragment extends Fragment implements FirebaseListener {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             getActivity().getSupportFragmentManager().beginTransaction().
-                                    replace(R.id.profile_fragment,new ViewProfileFragment()).commit();
+                                    replace(R.id.profile_fragment, new ViewProfileFragment()).commit();
                         }
                     });
             AlertDialog alertDialog = builder.create();
@@ -112,12 +113,12 @@ public class EditProfileFragment extends Fragment implements FirebaseListener {
 
     }
 
-    public void initialiseFields(){
-        firstName = (TextView)getView().findViewById(R.id.first_name_edit_txt);
-        lastName = (TextView)getView().findViewById(R.id.last_name_edit_txt);
-        phone = (TextView)getView().findViewById(R.id.phone_edit_txt);
-        address = (TextView)getView().findViewById(R.id.address_edit_text);
-        email = (TextView)getView().findViewById(R.id.edit_email_txt);
-        pincode = (TextView)getView().findViewById(R.id.pincode_edit_txt);
+    public void initialiseFields() {
+        firstName = (TextView) getView().findViewById(R.id.first_name_edit_txt);
+        lastName = (TextView) getView().findViewById(R.id.last_name_edit_txt);
+        phone = (TextView) getView().findViewById(R.id.phone_edit_txt);
+        address = (TextView) getView().findViewById(R.id.address_edit_text);
+        email = (TextView) getView().findViewById(R.id.edit_email_txt);
+        pincode = (TextView) getView().findViewById(R.id.pincode_edit_txt);
     }
 }
