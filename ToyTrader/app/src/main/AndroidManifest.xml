@@ -47,6 +47,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".MyOrders"></activity>
         <activity android:name=".CartActivity">
             <intent-filter>
                 <action android:name=".CartActivity" />

@@ -42,7 +42,7 @@ public class UploadToy extends AppCompatActivity implements AdapterView.OnItemSe
 
     private EditText name, tags, location, cost, description;
     private Button uploadImageButton;
-    private ImageView imageView ;
+    private ImageView imageView;
     private Uri selectedImage;
     private Spinner spinner;
     private ProgressBar progressSpinner;
@@ -106,8 +106,8 @@ public class UploadToy extends AppCompatActivity implements AdapterView.OnItemSe
         uploadImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ActivityCompat.requestPermissions(ut,new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE},
-                        PERMISSION_REQUEST_CODE );
+                ActivityCompat.requestPermissions(ut, new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE},
+                        PERMISSION_REQUEST_CODE);
                 showDialog("Select an Option");
             }
         });
@@ -120,7 +120,7 @@ public class UploadToy extends AppCompatActivity implements AdapterView.OnItemSe
             public void onClick(DialogInterface dialog, int id) {
                 Intent pickPhoto = new Intent(Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(pickPhoto , 1);
+                startActivityForResult(pickPhoto, 1);
             }
         }).setPositiveButton("Camera", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -135,17 +135,17 @@ public class UploadToy extends AppCompatActivity implements AdapterView.OnItemSe
 
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-        switch(requestCode) {
+        switch (requestCode) {
             case 0: //Camera
-                if(resultCode == RESULT_OK) {
-                    Bitmap photo = (Bitmap)imageReturnedIntent.getExtras().get("data");
+                if (resultCode == RESULT_OK) {
+                    Bitmap photo = (Bitmap) imageReturnedIntent.getExtras().get("data");
                     selectedImage = getImageUri(photo);
                     imageView.setVisibility(View.VISIBLE);
                     imageView.setImageBitmap(photo);
                 }
                 break;
             case 1:
-                if(resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     selectedImage = imageReturnedIntent.getData();
                     imageView.setVisibility(View.VISIBLE);
                     imageView.setImageURI(selectedImage);
@@ -218,52 +218,26 @@ public class UploadToy extends AppCompatActivity implements AdapterView.OnItemSe
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.nav_profile:
-                Intent intent2 = new Intent(this, ProfileActivity.class);
-                startActivity(intent2);
-                break;
-            case R.id.home:
-                Intent home = new Intent(this, UserHomeActivity.class);
-                startActivity(home);
-                break;
-            case R.id.add_toys:
-                Intent intent;
-                break;
-
-            case R.id.nav_cart:
-                intent = new Intent(this, CartActivity.class);
-                startActivity(intent);
-                break;
-
-            case R.id.nav_logout:
-                FirebaseHelper.getInstance().cleanUpForLogout();
-                intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                this.finish();
-                break;
-        }
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+        return Utilities.handleNavigationDrawerClick(menuItem, this, drawer);
     }
 
     private Boolean checkValidations() {
-        if(selectedImage == null) {
+        if (selectedImage == null) {
             SnackbarHelper.showMessage("Please select a toy image", this.findViewById(android.R.id.content));
             return false;
-        }else if(name.getText().toString().isEmpty()) {
+        } else if (name.getText().toString().isEmpty()) {
             SnackbarHelper.showMessage("Please enter toy name", this.findViewById(android.R.id.content));
             return false;
-        }else if(category.isEmpty()) {
+        } else if (category.isEmpty()) {
             SnackbarHelper.showMessage("Please select a category", this.findViewById(android.R.id.content));
             return false;
-        }else if(description.getText().toString().isEmpty()) {
+        } else if (description.getText().toString().isEmpty()) {
             SnackbarHelper.showMessage("Please enter some toy description", this.findViewById(android.R.id.content));
             return false;
-        }else if(cost.getText().toString().isEmpty()) {
+        } else if (cost.getText().toString().isEmpty()) {
             SnackbarHelper.showMessage("Please enter some cost for the toy", this.findViewById(android.R.id.content));
             return false;
-        }else if(location.getText().toString().isEmpty()) {
+        } else if (location.getText().toString().isEmpty()) {
             SnackbarHelper.showMessage("Please enter the address for the toy", this.findViewById(android.R.id.content));
             return false;
         }
@@ -279,7 +253,7 @@ public class UploadToy extends AppCompatActivity implements AdapterView.OnItemSe
     }
 
     public void addtoy(View V) {
-        if(checkValidations()){
+        if (checkValidations()) {
             progressSpinner.setVisibility(View.VISIBLE);
             FirebaseHelper.getInstance().uploadToyWithData(toyData, selectedImage, this);
         }
@@ -288,9 +262,9 @@ public class UploadToy extends AppCompatActivity implements AdapterView.OnItemSe
     @Override
     public <T> void getFBData(T event) {
         progressSpinner.setVisibility(View.GONE);
-        if(event instanceof String) {
+        if (event instanceof String) {
             SnackbarHelper.showMessage((String) event, this.findViewById(android.R.id.content));
-        }else if (event instanceof Boolean) {
+        } else if (event instanceof Boolean) {
             SnackbarHelper.showMessage("Uploaded Successfully! ", this.findViewById(android.R.id.content));
             Intent i = new Intent(this, UserHomeActivity.class);
             startActivity(i);

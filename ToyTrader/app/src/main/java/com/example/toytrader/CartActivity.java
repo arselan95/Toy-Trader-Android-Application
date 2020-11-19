@@ -36,7 +36,6 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
     RecyclerView.Adapter adapter;
     SharedPreferences preferences;
     int items;
-    Toy temp;
     TextView emptyView;
 
 
@@ -74,7 +73,6 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
         }
 
         items= preferences.getAll().size();
-        System.out.println(carttoys.size());
 
         layoutManager=new LinearLayoutManager(this);
         adapter=new CartAdapter(carttoys, getApplicationContext());
@@ -105,43 +103,13 @@ public class CartActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()){
-            case R.id.home:
-                Intent home = new Intent(this, UserHomeActivity.class);
-                startActivity(home);
-                break;
-            case R.id.add_toys:
-                Intent intent;
-                intent = new Intent(this, UploadToy.class);
-                startActivity(intent);
-                break;
-            case R.id.nav_profile:
-                Intent intent2 = new Intent(this, ProfileActivity.class);
-                startActivity(intent2);
-                break;
-
-            case R.id.nav_cart:
-                break;
-
-            case R.id.nav_logout:
-                FirebaseHelper.getInstance().cleanUpForLogout();
-                intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                this.finish();
-                break;
-        }
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+        return Utilities.handleNavigationDrawerClick(menuItem, this, drawer);
     }
 
     public void removeFromCart(View v)
     {
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
-
-        /*
-        TODO: REMOVE TOY OBJECT
-         */
         editor.remove("toy");
         editor.apply();
 

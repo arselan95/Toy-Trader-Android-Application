@@ -13,14 +13,6 @@ public class Toy {
         this.category = category;
     }
 
-    public Toy(String toyID, String name, double cost, String location)
-    {
-        this.toyID = toyID;
-        this.name=name;
-        this.cost=cost;
-        this.location=location;
-    }
-
     public String getName() {
         return name;
     }
