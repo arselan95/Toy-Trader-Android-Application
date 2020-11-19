@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity implements FirebaseListener {
-    private TextView registerText;
+    private TextView registerText, adminLoginText;
     private EditText email, password;
     private Button loginButton;
     private ProgressBar spinner;
@@ -28,6 +28,7 @@ public class LoginActivity extends AppCompatActivity implements FirebaseListener
         setupAllViews();
         setupTextWatchers();
         setupOnClickListeners();
+        onClickAdminLogin();
     }
 
     private void setupAllViews() {
@@ -35,6 +36,7 @@ public class LoginActivity extends AppCompatActivity implements FirebaseListener
         password = findViewById(R.id.login_password);
         loginButton = findViewById(R.id.login_button);
         registerText = (TextView) findViewById(R.id.register_text);
+        adminLoginText = (TextView) findViewById(R.id.admin_login_text);
         spinner = (ProgressBar) findViewById(R.id.progressBar_cyclic);
         spinner.setVisibility(View.GONE);
     }
@@ -87,6 +89,16 @@ public class LoginActivity extends AppCompatActivity implements FirebaseListener
                     spinner.setVisibility(View.VISIBLE);
                     FirebaseHelper.getInstance().signinWith(email.getText().toString(), password.getText().toString(), la);
                 }
+            }
+        });
+    }
+
+    private void onClickAdminLogin(){
+        adminLoginText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(".AdminLoginActivity");
+                startActivity((intent));
             }
         });
     }
