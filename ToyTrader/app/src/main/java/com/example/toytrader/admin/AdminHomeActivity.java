@@ -14,7 +14,7 @@ import android.widget.Button;
 
 import com.example.toytrader.R;
 public class AdminHomeActivity extends AppCompatActivity {
-    private Button manageUser, manageToys;
+    private Button manageUser, manageToys, manageIssues;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,7 @@ public class AdminHomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         onClickManageUser();
         onClickManageToys();
+        onClickManageIssues();
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -54,6 +55,17 @@ public class AdminHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(".ManageToysActivity");
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void onClickManageIssues(){
+        manageIssues = (Button)findViewById(R.id.manga_issues_btn);
+        manageIssues.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(".ManageIssuesActivity");
                 startActivity(intent);
             }
         });

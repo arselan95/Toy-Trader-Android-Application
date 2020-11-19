@@ -22,6 +22,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".admin.IssueDetailsActivity">
+            <intent-filter>
+                <action android:name=".IssueDetailsActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".admin.ManageIssuesActivity">
+            <intent-filter>
+                <action android:name=".ManageIssuesActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".admin.ToyDetailsActivity">
             <intent-filter>
                 <action android:name=".ToyDetailsActivity" />
@@ -83,8 +97,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".MyOrders"></activity>
+        <activity android:name=".MyOrders" />
         <activity android:name=".CartActivity">
             <intent-filter>
                 <action android:name=".CartActivity" />

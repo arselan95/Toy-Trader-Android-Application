@@ -52,7 +52,7 @@ public class AdminLoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(email.getText().equals("admin") && password.getText().equals("admin")) {
+                if(email.getText().toString().equals("admin") && password.getText().toString().equals("admin")) {
                     Intent intent = new Intent(".AdminHomeActivity");
                     startActivity(intent);
                 } else{
