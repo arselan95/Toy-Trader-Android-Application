@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity implements FirebaseListener
         password.addTextChangedListener(new CustomTextWatcher(password));
     }
 
-    private void setupOnClickListeners(){
+    private void setupOnClickListeners() {
         registerText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,28 +64,28 @@ public class LoginActivity extends AppCompatActivity implements FirebaseListener
     }
 
     private Boolean checkValidations() {
-        if(email.getText().toString().isEmpty()) {
+        if (email.getText().toString().isEmpty()) {
             SnackbarHelper.showMessage("Please Enter Email", this.findViewById(android.R.id.content));
             return false;
-        }else if(password.getText().toString().isEmpty()) {
+        } else if (password.getText().toString().isEmpty()) {
             SnackbarHelper.showMessage("Please Enter Password", this.findViewById(android.R.id.content));
             return false;
-        }else if (!Utilities.isValidEmail(email.getText())){
+        } else if (!Utilities.isValidEmail(email.getText())) {
             SnackbarHelper.showMessage("Please Enter a valid Email", this.findViewById(android.R.id.content));
             return false;
-        }else if (!Utilities.isValidPassword(password.getText())){
+        } else if (!Utilities.isValidPassword(password.getText())) {
             SnackbarHelper.showMessage("Please Enter a valid Password", this.findViewById(android.R.id.content));
             return false;
         }
         return true;
     }
 
-    private void onClickRegisterButton(){
+    private void onClickRegisterButton() {
         final LoginActivity la = this;
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(checkValidations()) {
+                if (checkValidations()) {
                     spinner.setVisibility(View.VISIBLE);
                     FirebaseHelper.getInstance().signinWith(email.getText().toString(), password.getText().toString(), la);
                 }
@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity implements FirebaseListener
     @Override
     public <T> void getFBData(T event) {
         spinner.setVisibility(View.GONE);
-        if(event != null) {
+        if (event != null) {
             Intent intent = new Intent(".UserHomeActivity");
             startActivity(intent);
             this.finish();

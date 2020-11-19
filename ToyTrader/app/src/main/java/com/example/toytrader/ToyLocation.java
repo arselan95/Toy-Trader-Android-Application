@@ -80,6 +80,9 @@ public class ToyLocation extends AppCompatActivity implements
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        Intent intent = getIntent();
+        address = intent.getStringExtra("toyLocation");
     }
 
     @Override
@@ -87,11 +90,7 @@ public class ToyLocation extends AppCompatActivity implements
         mMap = googleMap;
         Object transferData[] = new Object[2];
         GetToyLocation searchnearByPlaces = new GetToyLocation();
-
-        /*
-            ENTER FETCHED DATABASE ADDRESS HERE REPLACE STRING 'enteredaddress'
-         */
-        String enteredaddress = "3318, shoshana lane, san jose, ca, 95135";
+        String enteredaddress = address;
         enteredaddress = enteredaddress.replaceAll("\\s+","");
         address = enteredaddress;
 

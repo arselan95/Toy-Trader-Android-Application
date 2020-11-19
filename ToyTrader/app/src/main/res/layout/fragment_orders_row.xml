@@ -7,11 +7,7 @@
     android:orientation="horizontal"
     android:padding="10dp"
     app:cardCornerRadius="10dp">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="5dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,7 +22,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/cart_toyname"
+                android:id="@+id/orders_toyname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="hello"
@@ -34,7 +30,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/cart_toyprice"
+                android:id="@+id/orders_toyprice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="price"
@@ -42,15 +38,7 @@
                 android:textStyle="italic" />
 
             <TextView
-                android:id="@+id/cart_toy_rental_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="rent"
-                android:textSize="20sp"
-                android:textStyle="italic" />
-
-            <TextView
-                android:id="@+id/cart_toylocation"
+                android:id="@+id/orders_toylocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="hello"
@@ -60,14 +48,8 @@
 
         </LinearLayout>
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
         <Button
-            android:id="@+id/cart_checkout"
+            android:id="@+id/orders_return"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|left"
@@ -75,33 +57,8 @@
             android:gravity="center"
             android:padding="9dp"
             android:layout_marginRight="8dp"
-            android:text="Buy"
+            android:text="Return"
             android:textColor="@android:color/white" />
-
-        <Button
-            android:id="@+id/cart_rent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:padding="9dp"
-            android:layout_marginRight="8dp"
-            android:text="Rent"
-            android:textColor="@android:color/white" />
-
-
-        <Button
-            android:id="@+id/aboutbutton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:padding="9dp"
-            android:text="Remove"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
