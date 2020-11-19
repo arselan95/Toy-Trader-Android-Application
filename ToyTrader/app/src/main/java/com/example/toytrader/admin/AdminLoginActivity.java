@@ -1,4 +1,4 @@
-package com.example.toytrader;
+package com.example.toytrader.admin;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.example.toytrader.R;
+import com.example.toytrader.SnackbarHelper;
 
 public class AdminLoginActivity extends AppCompatActivity {
 
@@ -23,6 +26,7 @@ public class AdminLoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_login);
         setupAllViews();
         onClickUserLogin();
+        onClockLogin();
     }
 
     private void setupAllViews() {
@@ -40,6 +44,20 @@ public class AdminLoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(".LoginActivity");
                 startActivity(intent);
+            }
+        });
+    }
+
+    public void onClockLogin(){
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(email.getText().equals("admin") && password.getText().equals("admin")) {
+                    Intent intent = new Intent(".AdminHomeActivity");
+                    startActivity(intent);
+                } else{
+                    SnackbarHelper.showMessage("Invalid Credentials", AdminLoginActivity.this.findViewById(android.R.id.content));
+                }
             }
         });
     }

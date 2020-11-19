@@ -6,6 +6,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.toytrader.admin.ToyModel;
+import com.example.toytrader.admin.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -27,8 +29,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class FirebaseHelper {
 
@@ -205,7 +209,9 @@ public class FirebaseHelper {
                 });
     }
 
-    public void getAllToys() {
+    public void getAllToys(final FirebaseListener fbl) {
+        this.fbl = fbl;
+        final ArrayList<ToyModel> toyList = new ArrayList<>();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference toysRef = db.collection("toys");
         toysRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -214,15 +220,32 @@ public class FirebaseHelper {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Map<String, Object> json = document.getData();
-                        for (Map.Entry<String, Object> entry : json.entrySet()) {
-                            String key = entry.getKey();
-                            Object value = entry.getValue();
-                            Log.d(TAG, key + " => " + value);
-                        }
-                        Log.d(TAG, document.getId() + " => " + document.getData());
+                        ToyModel toy = new ToyModel((String)json.get("name"), document.getId());
+                        toyList.add(toy);
                     }
+                    fbl.getFBData(toyList);
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
+        });
+    }
+
+    public void getAllUsers(final  FirebaseListener fbl){
+        this.fbl = fbl;
+        final ArrayList<User> userList = new ArrayList<>();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference userRef = db.collection("users");
+        userRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot documentSnapshot: task.getResult()){
+                        Map<String, Object> json = documentSnapshot.getData();
+                        User user = new User((String)json.get("first_name")+" "+ (String)json.get("last_name"), documentSnapshot.getId());
+                        userList.add(user);
+                    }
+                    fbl.getFBData(userList);
                 }
             }
         });
@@ -279,6 +302,34 @@ public class FirebaseHelper {
         });
     }
 
+    public void getUser(String id, final FirebaseListener fbl){
+        this.fbl = fbl;
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+       final HashMap<String, Object> userDetails = new HashMap<>();
+        CollectionReference usersRef = db.collection("users");
+        usersRef.document(id).get().addOnCompleteListener(new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = (DocumentSnapshot) task.getResult();
+                    Map<String, Object> json = document.getData();
+                    for (Map.Entry<String, Object> entry : json.entrySet()) {
+                        String key = entry.getKey();
+                        Object value = entry.getValue();
+                        userDetails.put(key, value);
+                    }
+                    fbl.getFBData(userDetails);
+                } else {
+                    fbl.getFBData(null);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                fbl.getFBData(null);
+            }
+        });
+    }
     public void getDetailsForCurrentUser(final FirebaseListener fbl) {
         this.fbl = fbl;
         FirebaseFirestore db = FirebaseFirestore.getInstance();
