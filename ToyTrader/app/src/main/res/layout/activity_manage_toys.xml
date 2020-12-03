@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="10dp"
-        android:text="Mange Toys"
+        android:text="Manage Toys"
         android:textColor="@color/colorPrimary"
         android:textSize="24sp" />
 
