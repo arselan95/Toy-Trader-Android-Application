@@ -2,7 +2,7 @@
 
 # High level architecture
 
-![Screenshot](1.png)
+![Screenshot](1.png =100x200)
 
 
 # Database architecture
