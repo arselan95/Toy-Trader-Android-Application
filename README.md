@@ -2,4 +2,4 @@
 
 [embed]https://github.com/arselan95/Toy-Trader-Android-Application/blob/main/toytrader.pdf [/embed]
 
-![pdf](https://github.com/arselan95/Toy-Trader-Android-Application/blob/main/toytrader.pdf)
+<embed src="https://github.com/arselan95/Toy-Trader-Android-Application/blob/main/toytrader.pdf" type="application/pdf">
