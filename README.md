@@ -1,3 +1,3 @@
 # ToyTraderAndroidApplication
 
-[embed]http://example.com/file.pdf[/embed]
+[embed]https://github.com/arselan95/Toy-Trader-Android-Application/blob/main/toytrader.pdf[/embed]
