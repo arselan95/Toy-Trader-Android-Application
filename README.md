@@ -2,13 +2,12 @@
 
 # High level architecture
 
-
-<img src="1.png" alt="drawing" style="width:100px;"/>
+![Screenshot](1.png)
 
 
 # Database architecture
 
-<img src="2.png" alt="drawing" style="width:100px;"/>
+![Screenshot](2.png)
 
 ```
 ● Firebase - Document based NoSQL DB
@@ -43,7 +42,7 @@
 ● Details uploaded to Firebase
 ● User registered using Firebase Authentication
 ```
-<img src="3.png" alt="drawing" style="width:100px;"/>
+![Screenshot](3.png)
 
 # Login
 
