@@ -2,14 +2,13 @@
 
 # High level architecture
 
-![Screenshot](1.png =100x)
 
 <img src="1.png" alt="drawing" style="width:100px;"/>
 
 
 # Database architecture
 
-![Screenshot](2.png)
+<img src="2.png" alt="drawing" style="width:100px;"/>
 
 ```
 ● Firebase - Document based NoSQL DB
