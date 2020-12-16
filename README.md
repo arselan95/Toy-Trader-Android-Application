@@ -2,13 +2,6 @@
 
 # High level architecture
 
-
-
-
-# Database architecture
-
-
-
 ```
 ● Firebase - Document based NoSQL DB
 ● Firebase Authentication - Email - Password
