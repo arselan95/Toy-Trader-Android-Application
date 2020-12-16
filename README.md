@@ -43,7 +43,7 @@
 ● Details uploaded to Firebase
 ● User registered using Firebase Authentication
 ```
-![Screenshot](3.png)
+<img src="3.png" alt="drawing" style="width:100px;"/>
 
 # Login
 
