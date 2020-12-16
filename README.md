@@ -4,6 +4,8 @@
 
 ![Screenshot](1.png =100x)
 
+<img src="1.png" alt="drawing" style="width:100px;"/>
+
 
 # Database architecture
 
