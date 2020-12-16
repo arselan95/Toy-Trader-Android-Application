@@ -2,12 +2,12 @@
 
 # High level architecture
 
-![Screenshot](1.png)
+
 
 
 # Database architecture
 
-![Screenshot](2.png)
+
 
 ```
 ● Firebase - Document based NoSQL DB
@@ -42,7 +42,7 @@
 ● Details uploaded to Firebase
 ● User registered using Firebase Authentication
 ```
-![Screenshot](3.png)
+
 
 # Login
 
@@ -51,7 +51,7 @@
 ● User Authenticated with Firebase Auth
 ● Securely log into the Application
 ```
-![Screenshot](4.png)
+
 
 # Home Screen
 
@@ -59,7 +59,7 @@
 ● Home screen for the application
 ● Select from multiple categories
 ```
-![Screenshot](5.png)
+
 
 # Upload toy
 
@@ -67,7 +67,7 @@
 ● User can opt to upload their own toys
 ● Add a few details with the image and you’re good to go
 ```
-![Screenshot](6.png)
+
 
 # Categories
 
@@ -76,7 +76,7 @@
 ● Toys related to that category will be shown here
 ● Images are downloaded from firebase storage
 ```
-![Screenshot](7.png)
+
 
 # Toy Description
 
@@ -88,14 +88,14 @@
 ○ Report the toy
 ○ View Toy location on Map
 ```
-![Screenshot](8.png)
+
 
 # Map
 
 ```
 ● Map view to show the location on the map
 ```
-![Screenshot](9.png)
+
 
 # Cart
 
@@ -105,7 +105,7 @@
 ○ Rent the item
 ○ Remove the item
 ```
-![Screenshot](10.png)
+
 
 # Orders
 
@@ -113,7 +113,7 @@
 ● Orders page to provide user history
 ● User can view all the items that he has rented or bought
 ```
-![Screenshot](11.png)
+
 
 # Profile
 
@@ -123,7 +123,7 @@
 ● Can edit details
 ● Can change Password
 ```
-![Screenshot](12.png)
+
 
 # Admin
 
@@ -133,7 +133,7 @@
 ○ Users
 ○ Issues reported by Users
 ```
-![Screenshot](13.png)
+
 
 # Admin -
 
@@ -143,9 +143,6 @@
 ● Admin Can Block the user
 ● Admin can Delete the user
 ```
-![Screenshot](14.png)
-
-![Screenshot](15.png)
 
 # Admin -
 
@@ -155,7 +152,7 @@
 ● Admin can view list of toys
 ● Admin can delete the toy
 ```
-![Screenshot](16.png)
+
 
 # Admin -
 
@@ -164,7 +161,5 @@
 ```
 ● Admin can view the reported issues
 ```
-![Screenshot](17.png)
 
-![Screenshot](18.png)
 
